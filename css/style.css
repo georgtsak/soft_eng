@@ -273,18 +273,18 @@ a:focus {
   text-transform: uppercase;
   text-orientation: upright;
   font-weight: bold;
-  color: #ffffff;
+  color: #ffffff; /*xrwma PA*/
 }
 
 .slider_section .slider_heading h2 span {
-  color: #61051b;
+  color: #790621; /*xrwma PEI*/
 }
 
 .slider_section .detail-box h1 {
   font-size: 3rem;
   font-weight: bold;
   text-transform: uppercase;
-  color: #ffffff;
+  color: #ffffff; /*UNIVERSITY OF PIRAEUS*/
 }
 
 .slider_section .detail-box hr {
@@ -292,7 +292,7 @@ a:focus {
   border: none;
   width: 1.5px;
   height: 65px;
-  background-color: #ffffff;
+  background-color: #ffffff; /*katheth grammh*/
 }
 
 .slider_section .detail-box .btn-box {
@@ -305,16 +305,18 @@ a:focus {
   margin-top: 35px;
 }
 
-.slider_section .detail-box .btn-box .btn-1 {
+.slider_section .detail-box .btn-box .btn-1 { /*koubi "contact us"*/
   display: inline-block;
   padding: 10px 35px;
-  background-color: #000000;
+  background-color: #ffffff;
   border: 1px solid transparent;
   border-radius: 35px;
-  color: #ffffff;
+  color: #61051b; 
+  font-weight: bold;
+
 }
 
-.slider_section .detail-box .btn-box .btn-1:hover {
+.slider_section .detail-box .btn-box .btn-1:hover { /*tipota*/
   background-color: #ffffff;
   color: #000000;
 }
