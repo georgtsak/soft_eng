@@ -234,7 +234,7 @@ a:focus {
 }
 
 .nav-item a:focus, .nav-item a:active { /*allagh background xrwmatos + bold grammata kata to pathma*/
-  background-color: #d9d9d9;
+  background-color: #e6e6e6;
   font-weight: bold;
 
 }
