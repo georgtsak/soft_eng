@@ -233,6 +233,11 @@ a:focus {
   background-size: 55px;
 }
 
+.nav-item a:focus, .nav-item a:active { /*allagh background xrwmatos + bold grammata kata to pathma*/
+  background-color: #d9d9d9;
+  font-weight: bold;
+
+}
 
 
 /*end header section*/
