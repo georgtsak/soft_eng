@@ -172,6 +172,7 @@ a:focus {
   text-transform: uppercase;
 }
 
+
 a,
 a:hover,
 a:focus {
@@ -231,6 +232,8 @@ a:focus {
   background-image: url(../images/menu.png);
   background-size: 55px;
 }
+
+
 
 /*end header section*/
 /* slider section */
@@ -305,7 +308,7 @@ a:focus {
   margin-top: 35px;
 }
 
-.slider_section .detail-box .btn-box .btn-1 { /*koubi "contact us"*/
+.slider_section .detail-box .btn-box .btn-1 { /*koubi "Περισσότερα"*/
   display: inline-block;
   padding: 10px 35px;
   background-color: #ffffff;
@@ -316,9 +319,9 @@ a:focus {
 
 }
 
-.slider_section .detail-box .btn-box .btn-1:hover { /*tipota*/
+.slider_section .detail-box .btn-box .btn-1:hover { /*allagh xrwmatos*/
   background-color: #ffffff;
-  color: #000000;
+  color: #001c33;
 }
 
 .slider_section #carouselExampleIndicators {
