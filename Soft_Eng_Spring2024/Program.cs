@@ -1,7 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using Soft_Eng_Spring2024.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<DataContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("AppDB")));
 
 var app = builder.Build();
 
