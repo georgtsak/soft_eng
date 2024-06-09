@@ -54,7 +54,7 @@ namespace Soft_Eng_Spring2024.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,firstName,lastName,Email,Password")] User user)
+        public async Task<IActionResult> Create([Bind("Id,firstName,lastName,Email,Password,Role")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace Soft_Eng_Spring2024.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,firstName,lastName,Email,Password")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,firstName,lastName,Email,Password,Role")] User user)
         {
             if (id != user.Id)
             {
