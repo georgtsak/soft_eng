@@ -3,4 +3,6 @@
 ################################################################################
 
 /.vs
-/Soft_Eng_Spring2024/.vs/Soft_Eng_Spring2024
+/Soft_Eng_Spring2024/.vs
+/Soft_Eng_Spring2024/bin
+/Soft_Eng_Spring2024/obj
