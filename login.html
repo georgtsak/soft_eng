@@ -5,19 +5,24 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<meta name="keywords" content="" />
+	<meta name="keywords" content="" />	
 	<meta name="description" content="" />
 	<meta name="author" content="" />
 
-	<title>Υπηρεσίες - Τμήμα Πληροφορικής</title>
+	<title>Login - Τμήμα Πληροφορικής</title>
 
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="css/login.css" />
 
 	<link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Dosis:400,600,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
 	<link href="css/style.css" rel="stylesheet" />
 	<link href="css/responsive.css" rel="stylesheet" />
+	<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
 </head>
 
 <body>
@@ -65,23 +70,23 @@
                   <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
                     <ul class="navbar-nav  ">
                       <li class="nav-item active">
-                        <a class="nav-link" href="index.html">ΤΜΗΜΑ <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="index.html">ΤΜΗΜΑ<span class="sr-only">(current)</span></a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="anakoinwseis.html"> ΑΝΑΚΟΙΝΩΣΕΙΣ </a>
+                        <a class="nav-link" href="anakoinwseis.html">ΑΝΑΚΟΙΝΩΣΕΙΣ</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="text.html"> ΣΠΟΥΔΕΣ </a>
+                        <a class="nav-link" href="text2.html">ΣΠΟΥΔΕΣ</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="text.html">ΜΈΛΗ</a>
+                        <a class="nav-link" href="text3.html">ΜΈΛΗ</a>
                       </li>
-		      <li class="nav-item">
-                        <a class="nav-link" href="yphresies.html"><b>ΥΠΗΡΕΣΙΕΣ</b></a>
+					  <li class="nav-item">
+                        <a class="nav-link" href="yphresies.html">ΥΠΗΡΕΣΙΕΣ</a>
                       </li>
                     </ul>
                     <form class="form-inline">
-			<a class="btn btn-outline-secondary" href="login.html" role="button">Σύνδεση</a>
+					  <a class="btn btn-outline-secondary" href="login.html" role="button">Σύνδεση</a>
                     </form>
                   </div>
                 </div>
@@ -93,7 +98,75 @@
         </div>
       </div>
     </header>
-    <br><br><br><br>
-    <h1 style="text-align:center; color:white;"><b>* yphresies *</b></h1>
+	<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h3>Είσοδος στον λογαριασμό</h3>
+			</div>
+			<div class="card-body">
+				<form name="login_form" onsubmit="return elegxos_null()">
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+						</div>
+						<input type="text" name="username" class="form-control" placeholder="Όνομα χρήστη">
+						
+					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-key"></i></span>
+						</div>
+						<input type="password" minlength="8" id="password" name="password" class="form-control" placeholder="Κωδικός Πρόσβασης">
+					</div>
+					<div class="row align-items-center show">
+						<input type="checkbox" onclick="emfanish_kwdikou()">&nbsp;Εμφάνιση Κωδικού
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Σύνδεση" class="btn float-right login_btn">
+					</div>
+				</form>
+			</div>
+			<div class="card-footer">
+				<div class="d-flex justify-content-center links">
+					Δεν έχετε λογαριασμό;<a href="signup.html">Εγγραφή</a>
+				</div>
+				<div class="d-flex justify-content-center">
+					<a href="#">Ξεχάσατε τον κωδικό σας;</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script > //show password
+        function emfanish_kwdikou()
+        {
+            var x = document.getElementById("password");
+            if (x.type === "password")
+                {
+                    x.type = "text";
+                }
+                else
+                {
+                    x.type = "password";
+                }
+        }
+		
+		function elegxos_null() 
+		{
+			var u = document.forms["login_form"]["username"].value;
+			if (u == "") 
+			{
+				alert("Null: Name");
+				return false;
+			}
+			var p = document.forms["login_form"]["password"].value;
+			if (p == "") 
+			{
+				alert("Null: Password");
+				return false;
+			}
+		}
+    </script>
 </body>
 </html>
