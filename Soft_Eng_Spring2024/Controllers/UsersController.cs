@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +16,7 @@ namespace Soft_Eng_Spring2024.Controllers
     public class UsersController : Controller
     {
         private readonly DataContext _context;
+        private readonly HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA256;
 
         public UsersController(DataContext context)
         {
@@ -43,6 +47,7 @@ namespace Soft_Eng_Spring2024.Controllers
             return View(user);
         }
 
+
         // GET: Users/Create
         public IActionResult Create()
         {
@@ -54,6 +59,13 @@ namespace Soft_Eng_Spring2024.Controllers
         {
             return View();
         }
+
+        // GET:Users/Login
+        public IActionResult Login()
+        {
+            return View();
+        }
+
 
         // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -165,7 +177,7 @@ namespace Soft_Eng_Spring2024.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([Bind("Id,Firstname,Lastname,Email,Password")] User user)
         {
-            user.Password = Create_Password(user.Password);
+            Hash_Password(user);
             if (ModelState.IsValid)
             {
                 _context.Add(user);
@@ -175,12 +187,50 @@ namespace Soft_Eng_Spring2024.Controllers
             return View(user);
         }
 
-        private string Create_Password(string password)
+        private void Hash_Password(User user)
         {
-            
-            return "";
+            user.Salt = Create_Salt();
+            byte[] pass=Encoding.ASCII.GetBytes(user.Password);
+            var hash = Rfc2898DeriveBytes.Pbkdf2(pass, Convert.FromBase64String(user.Salt),10, hashAlgorithm,64);
+            user.Password=Convert.ToBase64String(hash);
+                
         }
 
+        private string Create_Salt()
+        {
+            var salt=RandomNumberGenerator.GetBytes(64);
+            return Convert.ToBase64String(salt);
+        }
+
+        private bool Verify_Password(string givenPass,User user)
+        {
+            var derivedHash= Rfc2898DeriveBytes.Pbkdf2(givenPass, Convert.FromBase64String(user.Salt), 10, hashAlgorithm, 64);
+            return CryptographicOperations.FixedTimeEquals(derivedHash, Convert.FromBase64String(user.Password));
+            
+        }
+
+
+        // POST: Users/Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(string? Email,string? Password)
+        {
+            if (Email == null || Password == null) {
+                return NotFound();
+            }
+            var user = await _context.Users
+                .FirstOrDefaultAsync(m => m.Email == Email);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            if (Verify_Password(Password, user))
+            {
+                return View(user);
+            }
+
+            return NotFound();
+        }
 
     }
 }
