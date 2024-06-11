@@ -49,12 +49,18 @@ namespace Soft_Eng_Spring2024.Controllers
             return View();
         }
 
+        // GET:Users/Register
+        public IActionResult Register()
+        {
+            return View();
+        }
+
         // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,firstName,lastName,Email,Password,Role")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Firstname,Lastname,Email,Password,Role")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +92,7 @@ namespace Soft_Eng_Spring2024.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,firstName,lastName,Email,Password,Role")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Firstname,Lastname,Email,Password,Role")] User user)
         {
             if (id != user.Id)
             {
@@ -153,5 +159,28 @@ namespace Soft_Eng_Spring2024.Controllers
         {
             return _context.Users.Any(e => e.Id == id);
         }
+
+        // POST: Users/Register
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register([Bind("Id,Firstname,Lastname,Email,Password")] User user)
+        {
+            user.Password = Create_Password(user.Password);
+            if (ModelState.IsValid)
+            {
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(user);
+        }
+
+        private string Create_Password(string password)
+        {
+            
+            return "";
+        }
+
+
     }
 }
