@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -40,7 +39,7 @@ namespace Soft_Eng_Spring2024.Controllers
         }
 
 
-        [Authorize]
+        [Authorize(Policy ="MustBeAdmin")]
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -58,7 +57,42 @@ namespace Soft_Eng_Spring2024.Controllers
 
             return View(user);
         }
-        [Authorize(Policy="MustBeAdmin")]
+
+        // GET: Users/User_Approval
+        [Authorize(Policy = "MustBeAdmin")]
+        public async Task<IActionResult> User_Approval()
+        {
+
+            var users =await _context.Users.Where(user => user.Role==0).ToListAsync();
+
+            return View(users);
+        }
+
+        // POST: Users/User_Approval
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy = "MustBeAdmin")]
+        public async Task<IActionResult> User_Approval(int Id, int Role)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _context.Users.FindAsync(Id);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                user.Role = Role;
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(User_Approval));
+            }
+            return View();
+        }
+
+
+        [Authorize(Policy="AdminOrProfessor")]
         // GET: Users/Create
         public IActionResult Create()
         {

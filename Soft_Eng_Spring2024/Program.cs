@@ -18,6 +18,8 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("MustBeAdmin", policy => policy.RequireClaim("Role", "3"));
     options.AddPolicy("MustBeProfessor", policy => policy.RequireClaim("Role", "2"));
+    options.AddPolicy("AdminOrProfessor", policy => policy.RequireClaim("Role", ["2","3"]));
+
 });
 
 var app = builder.Build();
