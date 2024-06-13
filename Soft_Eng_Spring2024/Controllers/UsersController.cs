@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +16,7 @@ using Soft_Eng_Spring2024.Models;
 
 namespace Soft_Eng_Spring2024.Controllers
 {
+    
     public class UsersController : Controller
     {
         private readonly DataContext _context;
@@ -29,6 +33,14 @@ namespace Soft_Eng_Spring2024.Controllers
             return View(await _context.Users.ToListAsync());
         }
 
+        // GET: Users/AccessDenied
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+
+        [Authorize]
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -46,8 +58,7 @@ namespace Soft_Eng_Spring2024.Controllers
 
             return View(user);
         }
-
-
+        [Authorize(Policy="MustBeAdmin")]
         // GET: Users/Create
         public IActionResult Create()
         {
@@ -64,6 +75,12 @@ namespace Soft_Eng_Spring2024.Controllers
         public IActionResult Login()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync("CookieAuth");
+            return RedirectToAction("Index","Home");
         }
 
 
@@ -179,7 +196,7 @@ namespace Soft_Eng_Spring2024.Controllers
         {
             Hash_Password(user);
             if (ModelState.IsValid)
-            {
+            { 
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -226,11 +243,24 @@ namespace Soft_Eng_Spring2024.Controllers
             }
             if (Verify_Password(Password, user))
             {
-                return View(user);
+                //creating security context
+                var claims = new List<Claim> {
+                    new Claim(ClaimTypes.Name, user.Email),
+                    new Claim("Role",user.Role.ToString()),
+                    new Claim("uId",user.Id.ToString())
+                };
+                var identity=new ClaimsIdentity(claims,"CookieAuth");
+                ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync("CookieAuth",claimsPrincipal);
+
+                return RedirectToAction("Index");
             }
 
             return NotFound();
         }
+
+
+
 
     }
 }

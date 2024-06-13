@@ -7,6 +7,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DataContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("AppDB")));
 
+builder.Services.AddAuthentication("CookieAuth").AddCookie("CookieAuth",options =>
+{
+    options.Cookie.Name = "CookieAuth";
+    options.LoginPath = "/Users/Login";
+    options.AccessDeniedPath = "/Users/AccessDenied";
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("MustBeAdmin", policy => policy.RequireClaim("Role", "3"));
+    options.AddPolicy("MustBeProfessor", policy => policy.RequireClaim("Role", "2"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,6 +35,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
