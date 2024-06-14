@@ -9,7 +9,7 @@
 	<meta name="description" content="" />
 	<meta name="author" content="" />
 
-	<title>Login - Τμήμα Πληροφορικής</title>
+	<title>Register - Τμήμα Πληροφορικής</title>
 
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
@@ -21,8 +21,6 @@
 	<link href="css/responsive.css" rel="stylesheet" />
 	<head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-</head>
-
 </head>
 
 <body>
@@ -83,7 +81,7 @@
                       </li>
                     </ul>
                     <form class="form-inline">
-					  <a class="btn btn-outline-secondary" href="register.html" role="button"><b>Σύνδεση</b>/Εγγραφή</a>
+					  <a class="btn btn-outline-secondary" href="login.html" role="button">Σύνδεση/<b>Εγγραφή</b></a>
                     </form>
                   </div>
                 </div>
@@ -97,18 +95,29 @@
     </header>
 	<div class="container">
 	<div class="d-flex justify-content-center h-100">
-		<div class="card">
+		<div class="card" style="height:520px;">
 			<div class="card-header">
-				<h3>Είσοδος στον λογαριασμό</h3>
+				<h3>Δημιουργία νέου λογαριασμού</h3>
 			</div>
 			<div class="card-body">
 				<form name="login_form" onsubmit="return elegxos_null()">
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+						</div>
+						<input type="text" name="firstname" class="form-control" placeholder="Όνομα">
+					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+						</div>
+						<input type="text" name="lastname" class="form-control" placeholder="Επώνυμο">
+					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-envelope"></i></span>
 						</div>
 						<input type="email" name="email" class="form-control" placeholder="Email">
-						
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
@@ -116,64 +125,70 @@
 						</div>
 						<input type="password" minlength="8" id="password" name="password" class="form-control" placeholder="Κωδικός Πρόσβασης">
 					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-key"></i></span>
+						</div>
+						<input type="password" minlength="8" id="password2" name="password2" class="form-control" placeholder="Επιβεβαίωση Κωδικού">
+					</div>
 					<div class="row align-items-center show">
 						<input type="checkbox" onclick="emfanish_kwdikou()">&nbsp;Εμφάνιση Κωδικού
 					</div>
 					<div class="form-group">
-						<input type="submit" value="Σύνδεση" class="btn float-right login_btn">
+						<input type="submit" value="Εγγραφή" class="btn float-right login_btn">
 					</div>
 				</form>
 			</div>
 			<div class="card-footer">
 				<div class="d-flex justify-content-center links">
-					Δεν έχετε λογαριασμό;<a href="register.html">Εγγραφή</a>
+					Έχετε ήδη λογαριασμό;<a href="login.html">Σύνδεση</a> <!-- <a asp-action="Login">Σύνδεση</a>-->
 				</div>
-				<div class="d-flex justify-content-center">
-					<a href="#">Ξεχάσατε τον κωδικό σας;</a>
-				</div>
+				
 			</div>
 		</div>
 	</div>
 </div>
-<script > //show password
-	function emfanish_kwdikou() 
-	{
-		var fields = ["password", "password2"];
-		for (var i = 0; i < fields.length; i++) {
-			var field = document.getElementById(fields[i]);
-			if (field.type === "password") 
-			{
-				field.type = "text";
-			} else 
-			{
-				field.type = "password";
+<script >
+        function emfanish_kwdikou() //show password
+        {
+            var x = document.getElementById("password");
+            if (x.type === "password")
+                {
+                    x.type = "text";
+                }
+                else
+                {
+                    x.type = "password";
+                }
+        }
+		
+		function elegxos_null() {
+			var fields = ["firstname", "lastname", "email", "password", "password2"];
+			var fieldNames = {
+				"firstname": "Όνομα",
+				"lastname": "Επώνυμο",
+				"email": "Email",
+				"password": "Κωδικός",
+				"password2": "Επιβεβαίωση Κωδικού"
+			};
+
+			for (var i = 0; i < fields.length; i++) {
+				var field = fields[i];
+				var value = document.forms["login_form"][field].value;
+				if (value == "") {
+					alert("Το πεδίο " + fieldNames[field] + " δεν μπορεί να είναι κενό.");
+					return false;
+				}
 			}
-		}
-	}
-
-	function elegxos_null() 
-	{
-		var fields = ["email", "password"];
-		var fieldNames = 
-		{
-			"email": "Email",
-			"password": "Κωδικός"
-		};
-
-		for (var i = 0; i < fields.length; i++) 
-		{
-			var field = fields[i];
-			var value = document.forms["login_form"][field].value;
-			if (value == "")
+			if (document.forms["login_form"]["password"].value != document.forms["login_form"]["password2"].value) 
 			{
-				alert("Το πεδίο " + fieldNames[field] + " δεν μπορεί να είναι κενό.");
+				alert("Ο κωδικός και η επιβεβαίωση κωδικού δεν ταιριάζουν.");
 				return false;
 			}
-		}
-	
-		return true;
-	}
 
-    </script>
+			return true;
+		}
+
+</script>
 </body>
 </html>
