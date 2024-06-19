@@ -18,6 +18,11 @@ namespace Soft_Eng_Spring2024.Controllers
             return View();
         }
 
+        public IActionResult Services()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
