@@ -1,74 +1,138 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Soft_Eng_Spring2024</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Soft_Eng_Spring2024.styles.css" asp-append-version="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.css"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Dosis:400,600,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/style.scss" rel="stylesheet/less" type="text/css" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap@5.1.3/css/bootstrap.min.css" rel="stylesheet">-->
+
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Soft_Eng_Spring2024</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Announcements" asp-action="Index">Announcements</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">Events</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav">
-                        @if(User==null || User.Identity==null|| User.Identity.IsAuthenticated){
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Logout">Logout</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Register">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Login">Login</a>
-                            </li>
-                        }
-                    </ul>
+    <div class="hero_area">
+        <header class="header_section">
+            <div class="container">
+                <div class="header_nav">
+                    <a class="navbar-brand brand_desktop" href="index.html">
+                        <img src="~/images/logo.png" alt="" />
+                    </a>
+                    <div class="main_nav">
+                        <div class="top_nav">
+                            <ul class=" ">
+                                <li class="">
+                                    <a class="" href="">
+
+                                        <img src="~/images/telephone.png" alt="" />
+                                        <span> 210 4142000</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="" href="">
+                                        <img src="~/images/mail.png" alt="" />
+                                        <span>info@unipi.gr</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="" href="">
+                                        <img src="~/images/location.png" alt="" />
+                                        <span>Μ. Καραολή & Α. Δημητρίου 80, Πειραιάς</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bottom_nav">
+                            <nav class="navbar navbar-expand-lg custom_nav-container">
+                                <a class="navbar-brand brand_mobile" href="index.html">
+                                    <img src="~/images/logo.png" alt="" />
+                                </a>
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+                                        <ul class="navbar-nav  ">
+                                            <li class="nav-item active">
+                                                <a class="nav-link" asp-controller="Home" asp-action="Index"><b>ΤΜΗΜΑ</b> <span class="sr-only">(current)</span></a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-controller="Announcements" asp-action="Index"> ΑΝΑΚΟΙΝΩΣΕΙΣ </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-controller="Events" asp-action="Index"> ΕΚΔΗΛΩΣΕΙΣ</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="spoudes.html"> ΣΠΟΥΔΕΣ </a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="yphresies.html">ΥΠΗΡΕΣΙΕΣ</a>
+                                            </li>
+                                             @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#">@User.Identity.Name</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                        @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="btn btn-outline-secondary" asp-area="" asp-controller="Users" asp-action="Logout">Logout</a>
+                                            
+                                        }
+                                        else
+                                        {
+                                            <form class="form-inline">
+                                                <a class="btn btn-outline-secondary" asp-controller="Users" asp-action="Register" role="button">Σύνδεση/Εγγραφή</a>
+                                            </form>
+                                        }
+                                       
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+
+
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+        </header>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Soft_Eng_Spring2024 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        <script type="text/javascript" src="~/js/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="~/js/bootstrap.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+
+        <script type="text/plain" src="https://cdn.jsdelivr.net/npm/popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script type="text/plain" src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+
+        <script>
+            function openNav() {
+                document.getElementById("myNav").classList.toggle("menu_width");
+                document.querySelector(".custom_menu-btn").classList.toggle("menu_btn-style");
+            }
+        </script>
+
+      
+        @RenderBody()
+
 </body>
+
 </html>

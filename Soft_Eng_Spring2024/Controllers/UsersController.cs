@@ -233,7 +233,7 @@ namespace Soft_Eng_Spring2024.Controllers
             { 
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index","Home");
             }
             return View(user);
         }
@@ -287,7 +287,7 @@ namespace Soft_Eng_Spring2024.Controllers
                 ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync("CookieAuth",claimsPrincipal);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
             }
 
             return NotFound();
