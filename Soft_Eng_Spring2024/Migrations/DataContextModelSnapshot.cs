@@ -76,6 +76,33 @@ namespace Soft_Eng_Spring2024.Migrations
                     b.ToTable("Event");
                 });
 
+            modelBuilder.Entity("Soft_Eng_Spring2024.Models.Poll", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("FinishDate")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly>("StartDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Votes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Poll");
+                });
+
             modelBuilder.Entity("Soft_Eng_Spring2024.Models.User", b =>
                 {
                     b.Property<int>("Id")

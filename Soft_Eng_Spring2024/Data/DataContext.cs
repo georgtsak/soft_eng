@@ -23,6 +23,8 @@ public DbSet<Soft_Eng_Spring2024.Models.Announcement> Announcement { get; set; }
 
 public DbSet<Soft_Eng_Spring2024.Models.Event> Event { get; set; } = default!;
 
+public DbSet<Soft_Eng_Spring2024.Models.Poll> Poll { get; set; } = default!;
+
     
 }
 
