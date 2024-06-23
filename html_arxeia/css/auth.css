@@ -4,10 +4,10 @@ align-content: center;
 }
 
 .card{
-height: 370px;
+height: auto;
 margin-top: auto;
 margin-bottom: auto;
-width: 400px;
+width: auto;
 background-color: rgba(12,12,12,0.5);
 }
 
@@ -42,7 +42,7 @@ height: 20px;
 .login_btn{
 color: white;
 background-color: #790621;
-width: 100px;
+width: auto;
 }
 
 .login_btn:hover{

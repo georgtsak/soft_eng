@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Soft_Eng_Spring2024/.vs
+/Soft_Eng_Spring2024/bin
+/Soft_Eng_Spring2024/obj
