@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\tsaki\\Desktop\\soft_eng\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{59578971-50F4-4693-8DED-A6812CBCB1B4}|Soft_Eng_Spring2024.csproj|c:\\users\\tsaki\\desktop\\soft_eng\\views\\users\\user_approval.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{59578971-50F4-4693-8DED-A6812CBCB1B4}|Soft_Eng_Spring2024.csproj|solutionrelative:views\\users\\user_approval.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "User_Approval.cshtml",
+              "DocumentMoniker": "C:\\Users\\tsaki\\Desktop\\soft_eng\\Views\\Users\\User_Approval.cshtml",
+              "RelativeDocumentMoniker": "Views\\Users\\User_Approval.cshtml",
+              "ToolTip": "C:\\Users\\tsaki\\Desktop\\soft_eng\\Views\\Users\\User_Approval.cshtml",
+              "RelativeToolTip": "Views\\Users\\User_Approval.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACcAAAAPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-22T21:12:51.332Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
