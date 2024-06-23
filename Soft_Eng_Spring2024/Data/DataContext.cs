@@ -7,14 +7,16 @@ using Soft_Eng_Spring2024.Models;
 
 public class DataContext : DbContext
 {
-    public DataContext() { }    
-    public DataContext(DbContextOptions<DataContext> options) : base(options)
-    {
-
-    }
+    protected readonly IConfiguration _config;
+    public DataContext(IConfiguration configuration) { _config = configuration; }    
+    //public DataContext(DbContextOptions<DataContext> options) : base(options)
+    //{
+        
+    //}
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
+        options.UseSqlite(_config.GetConnectionString("SqLiteDB"));
     }
 
     public DbSet<User> Users { get; set; }
