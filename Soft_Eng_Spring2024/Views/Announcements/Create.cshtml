@@ -8,60 +8,58 @@
 <link rel="stylesheet" type="text/css" href="~/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="~/css/auth.css" />
 
-<style>
-    body {
-        background: url('~/images/red_papei.jpg');
-        background-size: cover;
-    }
-</style>
-    <div class="forma-wrap">
-        <div class="forma-html">
-            <input id="tab-1" type="radio" name="tab" class="anakoinwsh" checked><label for="tab-1" class="tab">Ανακοίνωση</label>
-            <input id="tab-2" type="radio" name="tab" class="ekdhlwsh"><label for="tab-2" class="tab">Εκδήλωση</label>
-            <div class="login-form">
-                
-               @using (Html.BeginForm("Create", "Announcements", FormMethod.Post))
-            {
-                <div class="anakoinwsh-htm">
-                    <div class="group">
-                        <label class="label">Τίτλος</label>
-                        <input type="text" asp-for="Title" class="input">
-                    </div>
-                    <div class="group">
-                        <label class="label">Κείμενο</label>
-                        <textarea  asp-for="Body"  class="input" style="height: 100px; overflow-y:auto; min-height:55px; max-height: 150px;"></textarea>
-                    </div>
-                    <!--koubi-->
-                    <div class="hr"></div>
-                    <div class="group">
-                        <input type="hidden" asp-for="Author" value="@User.FindFirst("uId").Value" />
-                        <input type="submit" class="btn float-right login_btn" value="Προσθήκη Νέας Ανακοίνωσης">
-                    </div>
-                </div>
-            }
-            
-             @using (Html.BeginForm("Create", "Events", FormMethod.Post))
-            {
-                <div class="ekdhlwsh-htm">
-                    <div class="group">
-                        <label class="label">Τίτλος</label>
-                        <input asp-for="Title" type="text" class="input">
-                    </div>
-                    <div class="group">
-                        <label class="label">Κείμενο</label>
-                        <textarea asp-for="Body" class="input" style="height: 100px; overflow-y:auto; min-height:55px; max-height: 150px;"></textarea>
-                    </div>
-                    <!--koubi-->
-                    <div class="hr"></div>
-                    <div class="group">
-                        <input type="hidden" asp-for="Author" value="@User.FindFirst("uId").Value" />
-                        <input type="submit" class="btn float-right login_btn" value="Προσθήκη Νέας Εκδηλώσης">
-                    </div>
-                </div>
-            }
+<style>body{background-size:cover;}</style>
 
-                
+<div class="hero_area">
+    <div class="container">
+        <div class="forma-wrap">
+            <div class="forma-html">
+                <input id="tab-1" type="radio" name="tab" class="anakoinwsh" checked><label for="tab-1" class="tab">Ανακοίνωση</label>
+                <input id="tab-2" type="radio" name="tab" class="ekdhlwsh"><label for="tab-2" class="tab">Εκδήλωση</label>
+                <div class="login-form">
+
+                    @using (Html.BeginForm("Create", "Announcements", FormMethod.Post))
+                    {
+                        <div class="anakoinwsh-htm">
+                            <div class="group">
+                                <label class="label">Τίτλος</label>
+                                <input type="text" asp-for="Title" class="input">
+                            </div>
+                            <div class="group">
+                                <label class="label">Κείμενο</label>
+                                <textarea asp-for="Body" class="input" style="height: 100px; overflow-y:auto; min-height:55px; max-height: 150px;"></textarea>
+                            </div>
+                            <!--koubi-->
+                            <div class="hr"></div>
+                            <div class="group">
+                                <input type="hidden" asp-for="Author" value="@User.FindFirst("uId").Value" />
+                                <input type="submit" class="btn float-right login_btn" value="Προσθήκη Νέας Ανακοίνωσης">
+                            </div>
+                        </div>
+                    }
+
+                    @using (Html.BeginForm("Create", "Events", FormMethod.Post))
+                    {
+                        <div class="ekdhlwsh-htm">
+                            <div class="group">
+                                <label class="label">Τίτλος</label>
+                                <input asp-for="Title" type="text" class="input">
+                            </div>
+                            <div class="group">
+                                <label class="label">Κείμενο</label>
+                                <textarea asp-for="Body" class="input" style="height: 100px; overflow-y:auto; min-height:55px; max-height: 150px;"></textarea>
+                            </div>
+                            <!--koubi-->
+                            <div class="hr"></div>
+                            <div class="group">
+                                <input type="hidden" asp-for="Author" value="@User.FindFirst("uId").Value" />
+                                <input type="submit" class="btn float-right login_btn" value="Προσθήκη Νέας Εκδηλώσης">
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
+</div>
 
