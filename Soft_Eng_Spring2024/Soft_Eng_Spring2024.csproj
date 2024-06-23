@@ -8,7 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Home\Index1.cshtml" />
+    <Content Remove="Views\Home\studies.cshtml" />
     <Content Remove="wwwroot\css\forma_anakoin_events.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Home\htmlpage.html" />
   </ItemGroup>
 
   <ItemGroup>
