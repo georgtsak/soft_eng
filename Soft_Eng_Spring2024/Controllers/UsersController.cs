@@ -286,7 +286,6 @@ namespace Soft_Eng_Spring2024.Controllers
                 var identity=new ClaimsIdentity(claims,"CookieAuth");
                 ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync("CookieAuth",claimsPrincipal);
-
                 return RedirectToAction("Index","Home");
             }
 
