@@ -1,9 +1,3 @@
-/*den epireazoun*/
-*,:after,:before{box-sizing:border-box}             
-.clearfix:after,.clearfix:before{content:'';display:table}              
-.clearfix:after{clear:both;display:block}
-a{color:inherit;text-decoration:none}
-
 .forma-wrap{
   width:100%;
   margin:auto;
