@@ -85,8 +85,7 @@ body {
 .header_section {
   background-color: #ffffff; /*bara panw*/
   position: relative;
-  -webkit-clip-path: polygon(50% 0%, 100% 0, 100% 100%, 28.5% 100%, 26.5% 86%, 0 84%, 0 0);
-          clip-path: polygon(50% 0%, 100% 0, 100% 100%, 28.5% 100%, 26.5% 86%, 0 84%, 0 0);
+
 }
 
 .header_section::before {
@@ -94,12 +93,12 @@ body {
   position: absolute;
   top: 0;
   right: 0;
-  width: 62%;
+  width: 100%;
   height: 45px;
   background: #001c33; /*bara sto thlefwno-email-location*/
   z-index: 1;
-  -webkit-clip-path: polygon(50% 0%, 100% 0, 100% 100%, 8% 100%, 0 0);
-          clip-path: polygon(50% 0%, 100% 0, 100% 100%, 8% 100%, 0 0);
+  margin:auto;
+  
 }
 
 .header_section .nav_container {
@@ -191,16 +190,7 @@ a:focus {
           box-shadow: none;
 }
 
-.custom_nav-container .nav_search-btn {
-  background-image: url(../images/search-icon.png);
-  background-size: 22px;
-  background-repeat: no-repeat;
-  background-position-y: 7px;
-  width: 35px;
-  height: 35px;
-  padding: 0;
-  border: none;
-}
+
 
 .navbar-brand {
   display: -webkit-box;
@@ -212,8 +202,8 @@ a:focus {
 }
 
 .navbar-brand img {
-  width: 125px;
-  margin-right: 5px;
+  width: 200px;
+  margin-right: 0px;
 }
 
 .navbar-brand.brand_mobile {
@@ -239,8 +229,8 @@ a:focus {
 
 }
 
-
 /*end header section*/
+
 /* slider section */
 .slider_section {
   height: calc(100% - 80px);
