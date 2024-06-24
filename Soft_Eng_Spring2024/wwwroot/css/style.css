@@ -512,12 +512,13 @@ a:focus {
 
 .class_section .class_box-container .box .img-box {
   position: relative;
-  padding-left: 75px;
+  padding-left: 0px;
   background-color: #000000;
 }
 
 .class_section .class_box-container .box .img-box img {
   width: 100%;
+  height:250px;
 }
 
 .class_section .class_box-container .box .img-box .detail-box {
@@ -631,8 +632,8 @@ a:focus {
 }
 
 .class_section .owl-carousel .owl-nav .owl-prev {
-  width: 75px;
-  height: 75px;
+  width: 55px;
+  height: 55px;
   background-image: url(../images/prev.png);
 }
 
@@ -641,8 +642,8 @@ a:focus {
 }
 
 .class_section .owl-carousel .owl-nav .owl-next {
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   background-image: url(../images/next.png);
 }
 
