@@ -12,3 +12,35 @@ li {
 .header1 {
     background-color: white;
 }
+
+.contact_info {
+    background-color: #001c33;
+    padding: 10px;
+    text-align: center;
+    color: white; 
+}
+
+.contact_info p {
+    margin: 5px 0;
+}
+
+
+
+.contact_info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact_info li {
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.contact_info img {
+    margin-right: 5px;
+}
