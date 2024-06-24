@@ -1,0 +1,14 @@
+.img1 {
+    height: 100vh;
+    background-image: url(../images/red_papei.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+li {
+    list-style-type: none;
+}
+
+.header1 {
+    background-color: white;
+}
