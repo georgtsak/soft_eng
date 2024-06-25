@@ -783,7 +783,7 @@ a:focus {
       -ms-flex-align: center;
           align-items: center;
   padding: 95px 25px 45px 25px;
-  background-color: #050304;
+  background-color: #000;
 }
 
 .client_section .box .detail-box h4 {
