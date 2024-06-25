@@ -315,8 +315,8 @@ a:focus {
 }
 
 .slider_section .detail-box .btn-box .btn-1:hover { /*allagh xrwmatos*/
-  background-color: #ffffff;
-  color: #001c33;
+    background-color: #fff;
+    color: 3001C33;
 }
 
 .slider_section #carouselExampleIndicators {
@@ -390,7 +390,7 @@ a:focus {
 }
 
 .slider_section .carousel-control-prev:hover {
-  background-image: url(../images/prev-grey.png);
+    background-image: url(../images/prev-grey.png);
 }
 
 .slider_section .carousel-control-next {
@@ -400,7 +400,7 @@ a:focus {
 }
 
 .slider_section .carousel-control-next:hover {
-  background-image: url(../images/next-grey.png);
+    background-image: url(../images/next-grey.png);
 }
 
 .slider_section .number_box {
@@ -437,13 +437,14 @@ a:focus {
 }
 
 .about_section .heading_container h2 {
+  margin-top:40px;
   color: #ffffff;
 }
 
 .about_section .about_container {
-  padding: 45px;
-  background-image: url(../images/black_papei.jpg);
-  background-size: cover;
+    padding: 45px;
+    background-image: url(../images/cs.jpg);
+    background-size: 25%;
 }
 
 .about_section .about_container .detail-box {
@@ -464,7 +465,7 @@ a:focus {
   margin: 0 auto;
   border: none;
   width: 1.5px;
-  height: 125px;
+  height: 70px;
   background-color: #ffffff;
 }
 
@@ -587,7 +588,8 @@ a:focus {
 
 .class_section .class_box-container .box .btn-box a:hover {
   background-color: #ffffff;
-  color: #000000;
+  color: #61051b;
+  font-weight:bold;
 }
 
 .class_section .owl-carousel {
@@ -638,7 +640,7 @@ a:focus {
 }
 
 .class_section .owl-carousel .owl-nav .owl-prev:hover {
-  background-image: url(../images/prev-grey.png);
+  background-image: url(../images/prev-red.png);
 }
 
 .class_section .owl-carousel .owl-nav .owl-next {
@@ -648,7 +650,7 @@ a:focus {
 }
 
 .class_section .owl-carousel .owl-nav .owl-next:hover {
-  background-image: url(../images/next-grey.png);
+  background-image: url(../images/next-red.png);
 }
 
 .blog_section {
