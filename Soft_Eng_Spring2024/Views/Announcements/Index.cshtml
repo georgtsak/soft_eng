@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Soft_Eng_Spring2024.Models.Announcement>
 
-<h1 style="margin-left: 20px; font-weight:bold; color:#fff;">ΑΝΑΚΟΙΝΩΣΕΙΣ</h1>
+<h1 style="margin-left:20px; font-weight:bold; color:#fff;">ΑΝΑΚΟΙΝΩΣΕΙΣ</h1>
 @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
 {
     @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
@@ -22,14 +22,13 @@
                             <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
                             <p class="card-text">@Html.DisplayFor(modelItem => item.Date)</p>
                             <div style="margin-bottom:2px;">
-                                <a class="btn btn-outline-primary btn-sm" asp-action="Details" asp-route-id="@item.Id">Περισσότερα</a>
+                                <a class="btn btn-outline-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">Περισσότερα</a>
                                 @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
                                 {
                                     @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
                                     {
                                         <div style="float:right;">
-                                            <a class="btn btn-outline-secondary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Επεξεργασία</a>
-                                            <a class="btn btn-outline-info btn-sm" asp-action="Details" asp-route-id="@item.Id">Λεπτομέρειες</a>
+                                            <a class="btn btn-outline-info btn-sm" asp-action="Edit" asp-route-id="@item.Id">Επεξεργασία</a>
                                             <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Διαγραφή</a>
                                         </div>
                                     }
