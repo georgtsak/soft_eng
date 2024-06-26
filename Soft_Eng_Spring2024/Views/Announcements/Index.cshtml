@@ -1,44 +1,46 @@
 ﻿@model IEnumerable<Soft_Eng_Spring2024.Models.Announcement>
 
-<h1 style="margin-left:20px; font-weight:bold; color:#fff;">ΑΝΑΚΟΙΝΩΣΕΙΣ</h1>
-@if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
-{
-    @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
+<div style="background-color:rgb(97,5,27,0.3);padding:20px;">
+    <h1 style="margin-left:20px; font-weight:bold; color:#fff;">ΑΝΑΚΟΙΝΩΣΕΙΣ</h1>
+    @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
     {
-        <p>
-            <a class="btn btn-secondary" asp-action="Create" style="margin-left: 20px;">Δημιουργία νέας ανακοίνωσης</a>
-        </p>
+        @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
+        {
+            <p>
+                <a class="btn btn-secondary" asp-action="Create" style="margin-left: 20px;">Δημιουργία νέας ανακοίνωσης +</a>
+            </p>
+        }
     }
-}
 
-<div class="card mb-3" style="background-color: rgba(16, 16, 16, 0.5); margin:20px;">
-    <div class="card-body">
-        <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
-                            <p class="card-text">@Html.DisplayFor(modelItem => item.Date)</p>
-                            <div style="margin-bottom:2px;">
-                                <a class="btn btn-outline-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">Περισσότερα</a>
-                                @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
-                                {
-                                    @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
+    <div class="card mb-3" style="background-color: rgba(16, 16, 16, 0.5); margin:20px;">
+        <div class="card-body">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                                <p class="card-text">@Html.DisplayFor(modelItem => item.Date)</p>
+                                <div style="margin-bottom:2px;">
+                                    <a class="btn btn-outline-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">Περισσότερα</a>
+                                    @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
                                     {
-                                        <div style="float:right;">
-                                            <a class="btn btn-outline-info btn-sm" asp-action="Edit" asp-route-id="@item.Id">Επεξεργασία</a>
-                                            <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Διαγραφή</a>
-                                        </div>
+                                        @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
+                                        {
+                                            <div style="float:right;">
+                                                <a class="btn btn-outline-info btn-sm" asp-action="Edit" asp-route-id="@item.Id">Επεξεργασία</a>
+                                                <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Διαγραφή</a>
+                                            </div>
+                                        }
                                     }
-                                }
-                            </div>
+                                </div>
 
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
 </div>

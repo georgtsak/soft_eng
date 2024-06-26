@@ -52,7 +52,7 @@
 
                         <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                             <li class="nav-item active">
-                                <a class="nav-link text-secondary" asp-controller="Home" asp-action="Index"><b>ΤΜΗΜΑ</b> <span class="sr-only">(current)</span></a>
+                                <a class="nav-link text-secondary" asp-controller="Home" asp-action="Index">ΤΜΗΜΑ <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-secondary" asp-controller="Announcements" asp-action="Index"> ΑΝΑΚΟΙΝΩΣΕΙΣ </a>
@@ -63,17 +63,9 @@
                             <li>
                                 <a class="nav-link text-secondary" asp-controller="Home" asp-action="Study"> ΣΠΟΥΔΕΣ </a>
                             </li>
-                            @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
-                            {
-
-                                @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
-                                {
-                                    <li>
-                                        <a class="nav-link text-secondary" asp-controller="Polls" asp-action="Index">ΔΗΜΟΣΚΟΠΗΣΕΙΣ</a>
-                                    </li>
-
-                                }
-                            }
+                            <li>
+                                <a class="nav-link text-secondary" asp-controller="Polls" asp-action="Index">ΔΗΜΟΣΚΟΠΗΣΕΙΣ</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
