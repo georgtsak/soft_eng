@@ -4,50 +4,54 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 style="margin-left:20px; font-weight:bold; color:#fff;">ΔΗΜΟΣΚΟΠΗΣΕΙΣ</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FinishDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Votes)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FinishDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Votes)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+@if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
+{
+    if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
+    {
+        <p>
+            <a class="btn btn-secondary" asp-action="Create" style="margin-left: 20px;">Δημιουργία νέας δημοσκόπησης +</a>
+        </p>
+    }
 }
-    </tbody>
-</table>
+
+<div class="card mb-3" style="background-color: rgba(16, 16, 16, 0.5); margin:20px;display:inline-block;">
+    <div class="card-body">
+        <table class="table table-striped" style="color:white;">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Τίτλος</th>
+                    <th scope="col">Ημερομ. Έναρξης</th>
+                    <th scope="col">Ημερομ. Λήξης</th>
+                    <th scope="col">Ψήφοι</th>
+                    <th scope="col">Ενέργειες</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.Id</th>
+                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                        <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
+                        <td>@Html.DisplayFor(modelItem => item.FinishDate)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Votes)</td>
+                        <td>
+                            @if (User == null || User.Identity == null || !User.Identity.IsAuthenticated || User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
+                            {
+                                <div>
+                                    <a class="btn btn-outline-secondary" asp-action="Details" asp-route-id="@item.Id">Λεπτομέρειες</a>
+                                    <a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@item.Id">Επεξεργασία</a>
+                                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Διαγραφή</a>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
