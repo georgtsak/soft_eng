@@ -6,12 +6,12 @@
 
 <style>
     body {
-        background-image: url(../images/red_papei.jpg);
+        background-image: url(../images/cs.jpg);
         background-repeat: repeat;
         background-size: auto; 
     }</style>
 
-<div style="background-color:rgb(16,16,16,0.5);color:white;margin:100px;margin-right:200px;margin-left:200px;padding:50px;">
+<div style="background-color:rgb(16,16,16,0.5);color:white;margin:10px;margin-right:200px;margin-left:200px;padding:50px;">
     <h1><b>ΑΝΑΚΟΙΝΩΣΗ</b></h1>
     @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
     {
@@ -40,11 +40,11 @@
         {
             @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
             {
-                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-info btn-sm">Επεξεργασία</a>
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-info">Επεξεργασία</a>
 
             }
         }
-        <a asp-action="Index" class="btn btn-outline-secondary btn-sm">Επιστροφή</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Επιστροφή</a>
     </div>
 
 </div>
