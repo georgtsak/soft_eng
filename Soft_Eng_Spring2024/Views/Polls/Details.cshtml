@@ -3,40 +3,75 @@
 @{
     ViewData["Title"] = "Details";
 }
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css" />
+<link rel="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+      type="text/css" />
 
-<h1>Details</h1>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
+</script>
 
-<div>
-    <h4>Poll</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FinishDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FinishDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Votes)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Votes)
-        </dd>
-    </dl>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js">
+</script>
+
+<div style="background-color:rgb(97,5,27,0.3);padding:20px;">
+    <h1 style="margin-left:20px; font-weight:bold; color:#fff;">ΑΠΟΤΕΛΕΣΜΑ ΔΗΜΟΣΚΟΠΗΣΗΣ</h1>
+
+    <div class="card mb-3" style="background-color: rgba(16, 16, 16, 0.5); margin:20px;display:inline-block;">
+        <div class="card-body">
+            <table class="table table-striped" style="color:white;">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div style="background-color:rgb(255,255,255,0.12);padding-top:40px;padding-bottom:40px;padding:10px;width:auto;">
+                                <h3>
+                                    <b>@Html.DisplayFor(model => model.Title)</b>
+                                    <b>@Html.DisplayFor(model => model.Votes)</b>
+
+                                </h3>
+                                <h6 style="color:#808080; display:inline;"><i>@Html.DisplayFor(model => model.StartDate)</i></h6>
+                                <h6 style="color:#808080; display:inline;"> - <i>@Html.DisplayFor(model => model.FinishDate)</i></h6>
+
+                                <div id="chart"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<script>
+    var votesData = @Html.Raw(Json.Serialize(Model.Votes));
+
+    var chartData = Object.keys(votesData).map(function (key) {
+        return [key, votesData[key]];
+    });
+
+    let chart = bb.generate({
+        data: {
+            columns: chartData,
+            type: "donut",
+            onclick: function (d, i) {
+                console.log("onclick", d, i);
+            },
+            onover: function (d, i) {
+                console.log("onover", d, i);
+            },
+            onout: function (d, i) {
+                console.log("onout", d, i);
+            },
+        },
+        donut: {
+            title: "Votes",
+        },
+        bindto: "#chart",
+    });
+</script>
+
+
