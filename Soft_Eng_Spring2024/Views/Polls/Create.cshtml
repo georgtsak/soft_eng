@@ -4,42 +4,114 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<link rel="stylesheet" type="text/css" href="~/css/forma_anakoin_events.css" />
+<link rel="stylesheet" type="text/css" href="~/css/auth.css" />
+<style>
+    .date-group {
+        display: flex;
+        gap: 10px; /* Ρυθμίστε το διάστημα μεταξύ των πεδίων όπως χρειάζεται */
+    }
 
-<h4>Poll</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+    .date-input {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .poll-container {
+        display: flex;
+        gap: 10px;
+    }
+
+    .poll-column {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .poll-input {
+        margin-bottom: 10px;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+<div class="hero_area">
+    <div class="container">
+        <div class="forma-wrap">
+            <div class="forma-html">
+                <p class="tab" style="color:#fff;border-color: #790621;">Δημοσκόπηση
+                <div class="login-form">
+
+                    @using (Html.BeginForm("Create", "Polls", FormMethod.Post))
+                    {
+                            <div class="group">
+                                <label class="label">Τίτλος</label>
+                                <input type="text" asp-for="Title" class="input">
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                            <div class="group date-group">
+                                <div class="date-input">
+                                    <label class="label">Ημερομ. Έναρξης</label>
+                                    <input asp-for="StartDate" />
+                                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                                </div>
+                                <div class="date-input">
+                                    <label class="label">Ημερομ. Λήξης</label>
+                                    <input asp-for="FinishDate" />
+                                    <span asp-validation-for="FinishDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <label class="label">Επιλογές</label>
+                                <div class="poll-container">
+                                    <div id="pollColumn1" class="poll-column">
+                                        <div class="poll-group poll-input">
+                                            <input type="text" class="input" name="pollColumn" value="" />
+                                        </div>
+                                    </div>
+                                    <div id="pollColumn2" class="poll-column">
+                                        <div class="poll-group poll-input">
+                                            <input type="text" class="input" name="pollColumn" value="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <button id="addPollButton" class="btn login_btn" type="button" onclick="addPollInput()">+</button>
+                            </div>
+                            <!--koubi-->
+                            <div class="hr"></div>
+                            <div class="group">
+                                <input type="submit" class="btn float-right login_btn" value="Προσθήκη Νέας Δημοσκόπησης">
+                            </div>
+
+                    }
+
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FinishDate" class="control-label"></label>
-                <input asp-for="FinishDate" class="form-control" />
-                <span asp-validation-for="FinishDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="text" name="pollColumn" value="" />
-                <input type="text" name="pollColumn" value="" />
-                <input type="text" name="pollColumn" value="" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<script>
+    let pollCount = 2;
+
+    function addPollInput() {
+        if (pollCount < 8) {
+            pollCount++;
+            const newPollInput = document.createElement('div');
+            newPollInput.className = 'poll-group poll-input';
+            newPollInput.innerHTML = '<input type="text" class="input" name="pollColumn" value="" />';
+
+            if (pollCount % 2 !== 0) {
+                document.getElementById('pollColumn1').appendChild(newPollInput);
+            } else {
+                document.getElementById('pollColumn2').appendChild(newPollInput);
+            }
+
+            if (pollCount === 8) {
+                document.getElementById('addPollButton').classList.add('hidden');
+            }
+        }
+    }
+</script>
 

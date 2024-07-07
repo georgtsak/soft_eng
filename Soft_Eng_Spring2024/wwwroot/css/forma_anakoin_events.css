@@ -38,9 +38,9 @@
   border-bottom:3px solid transparent;
 }
 .forma-html .anakoinwsh:checked + .tab,
-.forma-html .ekdhlwsh:checked + .tab{
-  color:#fff;
-  border-color:#790621;
+.forma-html .ekdhlwsh:checked + .tab {
+	color: #fff;
+	border-color: #790621;
 }
 .tab{
 	color:rgb(255, 255, 255,.12)}
