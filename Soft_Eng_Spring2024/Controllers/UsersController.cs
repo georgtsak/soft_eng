@@ -117,6 +117,11 @@ namespace Soft_Eng_Spring2024.Controllers
             return RedirectToAction("Index","Home");
         }
 
+        public IActionResult Index1()
+        {
+            return View();
+        }
+
 
         // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.

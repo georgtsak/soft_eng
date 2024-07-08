@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    DateOnly today = DateOnly.FromDateTime(DateTime.Now);
 }
 <div style="background-color:rgb(97,5,27,0.3);padding:20px;">
     <h1 style="margin-left:20px; font-weight:bold; color:#fff;">ΔΗΜΟΣΚΟΠΗΣΕΙΣ</h1>
@@ -21,7 +22,6 @@
             <table class="table table-striped" style="color:white;">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">Τίτλος</th>
                         <th scope="col">Ημερομ. Έναρξης</th>
                         <th scope="col">Ημερομ. Λήξης</th>
@@ -29,14 +29,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.OrderByDescending(m => m.Id))
                     {
                         <tr>
-                            <th scope="row">@item.Id</th>
                             <td>@Html.DisplayFor(modelItem => item.Title)</td>
                             <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
                             <td>@Html.DisplayFor(modelItem => item.FinishDate)</td>
                             <td>
+                                @{
+                                    bool isVotingOpen = item.StartDate <= today && today <= item.FinishDate;
+                                    bool hasUserVoted = item.Voters.Contains(Int32.Parse(User.FindFirst("uId").Value));
+                                    string buttonClass = "btn-outline-secondary";
+
+                                    if (isVotingOpen && !hasUserVoted)
+                                    {
+                                        buttonClass = "btn-outline-success";
+                                    }
+                                }
+
+                                <a class="btn @buttonClass" asp-action="Vote" asp-route-id="@item.Id">Συμμετοχή</a>
+
                                 <a class="btn btn-outline-secondary" asp-action="Details" asp-route-id="@item.Id">Λεπτομέρειες</a>
 
                                 @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
@@ -45,7 +57,6 @@
                                     {
                                         <a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@item.Id">Επεξεργασία</a>
                                         <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Διαγραφή</a>
-                                        <a class="btn btn-outline-secondary" asp-action="Vote" asp-route-id="@item.Id">Συμμετοχή</a>
                                     }
                                 }
                             </td>

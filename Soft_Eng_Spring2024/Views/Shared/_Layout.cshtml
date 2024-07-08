@@ -86,10 +86,14 @@
                             <li>
                                 <a class="nav-link text-secondary" asp-controller="Polls" asp-action="Create">Δημιουργία Δημοσκόπησης</a>
                             </li>
+                            <li>
+                                <a class="nav-link text-secondary" asp-controller="Users" asp-action="Index1">Χρήστες</a>
+                            </li>
 
                         }
                         @if (User.FindFirst("Role").Value == "3")
                         {
+                            
                             <li>
                                 <a class="nav-link text-secondary" asp-controller="Users" asp-action="User_Approval">Διαχείριση Χρηστών</a>
                             </li>

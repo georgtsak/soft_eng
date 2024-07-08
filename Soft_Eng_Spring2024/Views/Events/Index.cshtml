@@ -32,7 +32,7 @@
         @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
         {
             <p>
-                <a class="btn btn-secondary" asp-action="Create" style="margin-left: 20px;">Δημιουργία νέας εκδήλωσης +</a>
+                <a class="btn btn-secondary" asp-action="Create" asp-controller="Announcements" style="margin-left: 20px;">Δημιουργία νέας εκδήλωσης +</a>
             </p>
         }
     }
@@ -43,11 +43,11 @@
                 @foreach (var item in Model)
                 {
                     <div class="col-md-4 mb-4">
-                        <div class="card h-100 card-round" style="background-color: rgba(16, 16, 16, 0.6); color: #fff; position: relative;">
+                        <div class="card h-100 card-round" style="background-color: rgba(16, 16, 16, 0.5); color: #fff; position: relative;">
                             <div class="event-date">
                                 <p>@item.Date.ToString("dd/MM")</p>
                             </div>
-                            <div class="card-header" style="background-color: rgba(0, 28, 51, 0.6); color: #fff; text-align: center;">
+                            <div class="card-header" style="background-color: rgba(0, 28, 51, 0.5); color: #fff; text-align: center;">
                                 <h4 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h4>
                             </div>
                             <div class="card-body">
