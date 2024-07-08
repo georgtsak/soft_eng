@@ -20,6 +20,7 @@
 								<th>Email</th>
 								<th>Ρόλος Χρήστη</th>
 								<th></th>
+                                <th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -39,36 +40,52 @@
                                         @Html.DisplayFor(modelItem => item.Email)
                                     </td>
                                     <td>
-                                        <select name="Role" value="@item.Role" class="form-select-sm">
                                                 @if (item.Role == 1)
                                                 {
+                                                <select name="Role" value="@item.Role" class="form-select-sm">
                                                     <option value="1" selected>Φοιτητής</option>
                                                     <option value="2">Καθηγητής</option>
                                                     <option value="3">Διαχειριστής</option>
+                                                </select>
                                                 }
                                                 else if (item.Role == 2)
                                                 {
+                                                     <select name="Role" value="@item.Role" class="form-select-sm">
                                                     <option value="1">Φοιτητής</option>
                                                     <option value="2" selected>Καθηγητής</option>
                                                     <option value="3">Διαχειριστής</option>
+                                                    </select>
                                                 }
                                                 else if(item.Role== 3)
                                                 {
+                                                     <select name="Role" disabled value="@item.Role" class="form-select-sm">
                                                     <option value="1">Φοιτητής</option>
                                                     <option value="2">Καθηγητής</option>
                                                     <option value="3" selected>Διαχειριστής</option>
+                                                    </select>
                                                 }
                                                 else
                                                 {
+                                                     <select name="Role" value="@item.Role" class="form-select-sm">
                                                     <option value="0" selected disabled>--Επιλέξτε Ρόλο--</option>
                                                     <option value="1">Φοιτητής</option>
                                                     <option value="2">Καθηγητής</option>
                                                     <option value="3">Διαχειριστής</option>
+                                                    </select>
                                                 }                                                
-                                            </select>
                                     </td>
-                                        <td><input type="submit" value="Αποθήκευση" class="btn float-right login_btn" /></td>
-                                }
+                                        <td>
+                                            @if (item.Role == 3)
+                                            {
+                                                <input type="submit" value="Αποθήκευση" disabled class="btn float-right login_btn" />
+                                            }
+                                            else
+                                            {
+                                                <input type="submit" value="Αποθήκευση" class="btn float-right login_btn" />
+                                            }
+                                        </td>
+                                            
+                                    }
                                         
                                             @using (Html.BeginForm("Delete", "Users", FormMethod.Post))
                                     {

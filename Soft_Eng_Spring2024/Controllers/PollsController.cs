@@ -132,8 +132,8 @@ namespace Soft_Eng_Spring2024.Controllers
                 try
                 {
                     var votesDict = DeserializeVotes(poll.Votes);
-                    var uId = Int32.(User.FindFirst("uid").Value);
-                    if (poll.Voters.Any(uId))
+                    var uId = Int32.Parse(User.FindFirst("uid").Value);
+                    if (poll.Voters.Contains(uId))
                     {
                         return NotFound();
                     }
