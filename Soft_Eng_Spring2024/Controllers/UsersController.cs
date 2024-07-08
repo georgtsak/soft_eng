@@ -63,7 +63,7 @@ namespace Soft_Eng_Spring2024.Controllers
         public async Task<IActionResult> User_Approval()
         {
 
-            var users =await _context.Users.Where(user => user.Role==0).ToListAsync();
+            var users =await _context.Users.ToListAsync();
 
             return View(users);
         }
@@ -215,7 +215,7 @@ namespace Soft_Eng_Spring2024.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(User_Approval));
         }
 
         private bool UserExists(int id)
@@ -233,6 +233,7 @@ namespace Soft_Eng_Spring2024.Controllers
             { 
                 _context.Add(user);
                 await _context.SaveChangesAsync();
+                securityContext(user);
                 return RedirectToAction("Index","Home");
             }
             return View(user);
@@ -277,23 +278,23 @@ namespace Soft_Eng_Spring2024.Controllers
             }
             if (Verify_Password(Password, user))
             {
-                //creating security context
-                var claims = new List<Claim> {
-                    new Claim(ClaimTypes.Name, user.Email),
-                    new Claim("Role",user.Role.ToString()),
-                    new Claim("uId",user.Id.ToString())
-                };
-                var identity=new ClaimsIdentity(claims,"CookieAuth");
-                ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync("CookieAuth",claimsPrincipal);
+                securityContext(user);
                 return RedirectToAction("Index","Home");
             }
 
             return NotFound();
         }
-
-
-
-
+        private void securityContext(User user)
+        {
+            //creating security context
+            var claims = new List<Claim> {
+                    new Claim(ClaimTypes.Name, user.Email),
+                    new Claim("Role",user.Role.ToString()),
+                    new Claim("uId",user.Id.ToString())
+                };
+            var identity = new ClaimsIdentity(claims, "CookieAuth");
+            ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
+            HttpContext.SignInAsync("CookieAuth", claimsPrincipal);
+        }
     }
 }
