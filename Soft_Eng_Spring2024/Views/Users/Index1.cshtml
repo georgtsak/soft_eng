@@ -2,58 +2,62 @@
 
 @{
     ViewData["Title"] = "Index";
-}
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Firstname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Lastname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Role)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Firstname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lastname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+    string GetRoleName(int role)
+    {
+        return role switch
+        {
+            0 => "Δεν έχει καθοριστεί",
+            1 => "Φοιτητής",
+            2 => "Καθηγητής",
+            3 => "Διαχειριστής"
+        };
+    }
 }
-    </tbody>
-</table>
+<div style="background-color:rgb(97,5,27,0.3);padding:20px;">
+    <h1 style="margin-left:20px; font-weight:bold; color:#fff;">ΧΡΗΣΤΕΣ</h1>
+
+    @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
+    {
+        if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
+        {
+            <p>
+                <a class="btn btn-secondary" asp-action="Create" style="margin-left: 20px;">Δημιουργία νέου χρήστη +</a>
+            </p>
+        }
+    }
+
+    <div class="card mb-3" style="background-color: rgba(16, 16, 16, 0.5); margin:20px;display:inline-block;">
+        <div class="card-body">
+            <table class="table table-striped" style="color:white;">
+                <thead>
+                    <tr>
+                        <th scope="col">Όνομα</th>
+                        <th scope="col">Επώνυμο</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Ρόλος</th>
+                        <th scope="col">Ενέργειες</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Firstname)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Lastname)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td>@GetRoleName(item.Role)</td>
+
+                            <td>
+                                <a class="btn btn-outline-secondary" asp-action="Details" asp-route-id="@item.Id">Λεπτομέρειες</a>
+                                <a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@item.Id">Επεξεργασία</a>
+                                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Διαγραφή</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

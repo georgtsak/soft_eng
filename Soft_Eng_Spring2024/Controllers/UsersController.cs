@@ -117,11 +117,13 @@ namespace Soft_Eng_Spring2024.Controllers
             return RedirectToAction("Index","Home");
         }
 
+        // Users/Index1
         public IActionResult Index1()
         {
-            return View();
+            var users = _context.Users.ToList();
+            return View(users);
         }
-
+        
 
         // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
