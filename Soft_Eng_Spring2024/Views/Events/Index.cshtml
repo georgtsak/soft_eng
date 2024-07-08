@@ -59,7 +59,7 @@
                                         @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
                                         {
                                             <div style="float:right;">
-                                                <a class="btn btn-outline-info btn-sm" asp-action="Edit" asp-route-id="@item.Id">Επεξεργασία</a>
+                                                <a class="btn btn-outline-info btn-sm" asp-action="Edit" asp-controller="Events" asp-route-id="@item.Id">Επεξεργασία</a>
                                                 <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Διαγραφή</a>
                                             </div>
                                         }

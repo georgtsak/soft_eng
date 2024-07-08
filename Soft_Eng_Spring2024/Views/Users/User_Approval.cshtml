@@ -17,7 +17,7 @@
 							<tr>
 								<th>Όνομα</th>
 								<th>Επώνυμο</th>
-								<th>Email</th>
+                                <!--<th>Email</th>-->
 								<th>Ρόλος Χρήστη</th>
 								<th></th>
                                 <th></th>
@@ -36,9 +36,9 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Lastname)
                                     </td>
-                                    <td>
+                                    /*<td>
                                         @Html.DisplayFor(modelItem => item.Email)
-                                    </td>
+                                    </td>*/
                                     <td>
                                                 @if (item.Role == 1)
                                                 {
@@ -92,11 +92,12 @@
                                         <td>
                                             <input type="hidden" name="Id" value="@item.Id" />
                                             @if(item.Role==3){
-                                                <input type="submit" value="Delete" disabled class="btn btn-danger" />
+                                                <input type="submit" value="Διαγραφή" disabled class="btn btn-outline-danger" />
                                             }
                                             else
                                             {
-                                                <input type="submit" value="Delete" class="btn btn-danger" /> 
+                                                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Διαγραφή</a>
+
                                             }
                                             
                                         </td>
