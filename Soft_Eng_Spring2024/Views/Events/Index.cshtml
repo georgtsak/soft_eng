@@ -1,9 +1,78 @@
 ﻿@{
     ViewData["Title"] = "Εκδηλώσεις - Τμήμα Πληροφορικής";
 }
-<br>
-<br>
-<br>
-<br>
-<h1 style="text-align:center; color:white;"><b>* ekdilwseis *</b></h1>
+@model IEnumerable<Soft_Eng_Spring2024.Models.Event>
+
+<style>
+    .card-round {
+        border-radius: 50px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .event-date {
+        position: absolute;
+        top: 30px;
+        right: 10px;
+        background-color: rgb(97,5,27,0.6);
+        color:#fff;
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+
+<div style="background-color:rgba(97,5,27,0.3);padding:20px;">
+    <h1 style="margin-left:20px; font-weight:bold; color:#fff;">ΕΚΔΗΛΩΣΕΙΣ</h1>
+    @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
+    {
+        @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
+        {
+            <p>
+                <a class="btn btn-secondary" asp-action="Create" style="margin-left: 20px;">Δημιουργία νέας εκδήλωσης +</a>
+            </p>
+        }
+    }
+
+    <div class="card mb-3" style="background-color: rgba(16, 16, 16, 0.5); margin:20px;">
+        <div class="card-body">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 card-round" style="background-color: rgba(16, 16, 16, 0.6); color: #fff; position: relative;">
+                            <div class="event-date">
+                                <p>@item.Date.ToString("dd/MM")</p>
+                            </div>
+                            <div class="card-header" style="background-color: rgba(0, 28, 51, 0.6); color: #fff; text-align: center;">
+                                <h4 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h4>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">@Html.DisplayFor(modelItem => item.Body)</p>
+                                <div class="button-container center">
+                                    <a class="btn btn-outline-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">Περισσότερα</a>
+                                    @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
+                                    {
+                                        @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
+                                        {
+                                            <div style="float:right;">
+                                                <a class="btn btn-outline-info btn-sm" asp-action="Edit" asp-route-id="@item.Id">Επεξεργασία</a>
+                                                <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Διαγραφή</a>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
 

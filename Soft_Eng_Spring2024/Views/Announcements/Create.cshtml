@@ -49,9 +49,10 @@
                             </div>
                             <!--koubi-->
                             <div class="hr"></div>
-                            <div class="group">
+                            <div class="group" style="display: flex; justify-content: flex-end; align-items: center;">
                                 <input type="hidden" asp-for="Author" value="@User.FindFirst("uId").Value" />
-                                <input type="submit" class="btn float-right login_btn" value="Προσθήκη Νέας Εκδηλώσης">
+                                <input type="date" class="form-control mr-2" asp-for="Date" />
+                                <input type="submit" class="btn login_btn" value="Προσθήκη Νέας Εκδήλωσης">
                             </div>
                         </div>
                     }
