@@ -1,0 +1,83 @@
+﻿@model Soft_Eng_Spring2024.Models.Poll
+
+@{
+    ViewData["Title"] = "Test";
+    Dictionary<string, int> pollDict = TempData["pollDict"] as Dictionary<string, int>;
+    DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/forma_anakoin_events.css" />
+<link rel="stylesheet" type="text/css" href="~/css/auth.css" />
+<style>
+    .date-group {
+        display: flex;
+        gap: 10px; /* Ρυθμίστε το διάστημα μεταξύ των πεδίων όπως χρειάζεται */
+    }
+
+    .date-input {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .poll-container {
+        display: flex;
+        gap: 10px;
+    }
+
+    .poll-column {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .poll-input {
+        margin-bottom: 10px;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+<div class="hero_area">
+    <div class="container">
+        <div class="forma-wrap">
+            <div class="forma-html">
+                <p class="tab" style="color:#fff;border-color: #790621;">
+                    @Html.DisplayFor(model=>model.Title)
+                    <div class="login-form">
+                            @foreach (var item in pollDict)
+                            {
+                              <p class="tab" style="color:#fff;">Votes for: @item.Key : @item.Value </p>
+                            }
+                            @if (Model.StartDate <= today && today <= Model.FinishDate)
+                            {
+                                @using (Html.BeginForm("Vote", "Polls", FormMethod.Post))
+                                {
+                                    @foreach (var item in pollDict)
+                                    {
+                                        <p class="tab" style="color:#fff;">@item.Key @Html.RadioButton("vote", item.Key)</p>
+                                    }
+                                    <div class="hr"></div>
+                                    <div class="group">
+                                    <input type="hidden" value="@Model.Id)">
+                                    @if (Model.Voters.Contains(Int32.Parse(User.FindFirst("uId").Value)))
+                                    {
+                                        <input type="submit" class="btn float-right login_btn" disabled value="Προσθήκη Ψήφου">
+                                        <p class="tab" style="color:#fff;">Έχετε συμμετάσχει στην ψηφοφορία</p>
+                                    }
+                                    else
+                                    {
+                                        <input type="submit" class="btn float-right login_btn" value="Προσθήκη Ψήφου">
+                                    }
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="tab" style="color:#fff;">Η ψηφοφορία έχει λήξει!</p>
+                        }
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

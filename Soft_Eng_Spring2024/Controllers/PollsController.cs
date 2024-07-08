@@ -120,13 +120,31 @@ namespace Soft_Eng_Spring2024.Controllers
             return View(poll);
         }
 
-        public async Task<IActionResult> Vote(int id, [Bind("Id,Title,StartDate,FinishDate,Votes,Voters")] Poll poll,string Vote)
+        public async Task<IActionResult> Vote(int? id)
         {
-            if (id != poll.Id)
+            if (id == null)
             {
                 return NotFound();
             }
 
+            var poll = await _context.Poll.FindAsync(id);
+            if (poll == null)
+            {
+                return NotFound();
+            }
+            TempData["pollDict"] = DeserializeVotes(poll.Votes);
+            return View(poll);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Vote(int? id,string vote)
+        {
+            if (id == null || vote==null)
+            {
+                return NotFound();
+            }
+            var poll = await _context.Poll.FindAsync(id);
             if (ModelState.IsValid)
             {
                 try
@@ -139,7 +157,7 @@ namespace Soft_Eng_Spring2024.Controllers
                     }
                     else
                     {
-                        votesDict[Vote]++;
+                        votesDict[vote]++;
                         poll.Voters.Add(uId);
                         poll.Votes=SerializeVotes(votesDict);
                         _context.Update(poll);
