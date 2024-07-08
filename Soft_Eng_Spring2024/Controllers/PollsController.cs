@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
@@ -56,11 +57,11 @@ namespace Soft_Eng_Spring2024.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,StartDate,FinishDate,Votes")] Poll poll , string[] pollColumn)
+        public async Task<IActionResult> Create([Bind("Id,Title,StartDate,FinishDate,Votes,Voters")] Poll poll , string[] pollColumn)
         {
             if (ModelState.IsValid)
             {   
-                poll.Votes=ColumnsToVotes(pollColumn);
+                poll.Votes=SerializeVotes(pollColumn);
                 _context.Add(poll);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -89,7 +90,7 @@ namespace Soft_Eng_Spring2024.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,StartDate,FinishDate,Votes")] Poll poll)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,StartDate,FinishDate,Votes,Voters")] Poll poll)
         {
             if (id != poll.Id)
             {
@@ -102,6 +103,48 @@ namespace Soft_Eng_Spring2024.Controllers
                 {
                     _context.Update(poll);
                     await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PollExists(poll.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(poll);
+        }
+
+        public async Task<IActionResult> Vote(int id, [Bind("Id,Title,StartDate,FinishDate,Votes,Voters")] Poll poll,string Vote)
+        {
+            if (id != poll.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var votesDict = DeserializeVotes(poll.Votes);
+                    var uId = Int32.(User.FindFirst("uid").Value);
+                    if (poll.Voters.Any(uId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        votesDict[Vote]++;
+                        poll.Voters.Add(uId);
+                        poll.Votes=SerializeVotes(votesDict);
+                        _context.Update(poll);
+                        await _context.SaveChangesAsync();
+                    }                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -157,7 +200,7 @@ namespace Soft_Eng_Spring2024.Controllers
             return _context.Poll.Any(e => e.Id == id);
         }
 
-        private string ColumnsToVotes(string[] columns)
+        private string SerializeVotes(string[] columns)
         {
             Dictionary<string,int> votesDict=new Dictionary<string, int>();
             foreach (var column in columns) { votesDict.Add(column, 0);}
@@ -165,7 +208,13 @@ namespace Soft_Eng_Spring2024.Controllers
             return serialized;
         }
 
-        private Dictionary<string,int> VotesToDict(string Votes)
+        private string SerializeVotes(Dictionary<String,int> dict)
+        {
+            string serialized = JsonSerializer.Serialize(dict);
+            return serialized;
+        }
+
+        private Dictionary<string,int> DeserializeVotes(string Votes)
         {
             Dictionary<string,int> votesDict = JsonSerializer.Deserialize<Dictionary<string,int>>(Votes);
             return votesDict;

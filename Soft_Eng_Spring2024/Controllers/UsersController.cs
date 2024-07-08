@@ -294,6 +294,7 @@ namespace Soft_Eng_Spring2024.Controllers
                 };
             var identity = new ClaimsIdentity(claims, "CookieAuth");
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
+            Thread.CurrentPrincipal = claimsPrincipal;
             HttpContext.SignInAsync("CookieAuth", claimsPrincipal);
         }
     }

@@ -13,6 +13,8 @@ namespace Soft_Eng_Spring2024.Models
         public DateOnly FinishDate { get; set; }
 
         public string Votes { get; set; } = ""; 
+
+        public List<int> Voters { get; set; }=new List<int>();
         
     }
 }
