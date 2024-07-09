@@ -47,7 +47,7 @@
                     <div class="login-form">
                             @foreach (var item in pollDict)
                             {
-                              <p class="tab" style="color:#fff;">Votes for: @item.Key : @item.Value </p>
+                              <p style="color:#fff;">Ψήφοι για @item.Key : @item.Value </p>
                             }
                             @if (Model.StartDate <= today && today <= Model.FinishDate)
                             {
@@ -59,23 +59,28 @@
                                     }
                                     <div class="hr"></div>
                                     <div class="group">
-                                    <input type="hidden" value="@Model.Id)">
-                                    @if (Model.Voters.Contains(Int32.Parse(User.FindFirst("uId").Value)))
-                                    {
-                                        <input type="submit" class="btn float-right login_btn" disabled value="Προσθήκη Ψήφου">
-                                        <h5 style="color:#fff;">Έχετε συμμετάσχει στην ψηφοφορία</h5>
-                                    }
-                                    else
-                                    {
-                                        <input type="submit" class="btn float-right login_btn" value="Προσθήκη Ψήφου">
-                                    }
-                                </div>
+                                        <input type="hidden" value="@Model.Id)">
+                                        @if (Model.Voters.Contains(Int32.Parse(User.FindFirst("uId").Value)))
+                                        {
+                                        <h6 class="p-1 mb-2 bg-danger text-white" style="display: inline-block;">Έχετε συμμετάσχει στην ψηφοφορία</h6>
+                                        }
+                                        else
+                                        {
+                                            <input type="submit" class="btn float-right login_btn" value="Προσθήκη Ψήφου">
+                                        }
+                                    </div>
                             }
-                        }
-                        else
-                        {
-                            <h5 style="color:#fff;">Η ψηφοφορία έχει λήξει!</h5>
-                        }
+                            }
+                            else if (Model.StartDate > today) 
+                            {
+                            <div class="hr"></div>
+                            <h6 class="p-1 mb-2 bg-danger text-white" style="display: inline-block;">Η ψηφοφορία δεν έχει ξεκινήσει!</h6>
+                            }
+                            else
+                            {
+                            <div class="hr"></div>
+                            <h6 class="p-1 mb-2 bg-danger text-white" style="display: inline-block;">Η ψηφοφορία έχει λήξει!</h6>
+                            }
                     </div>
             </div>
         </div>
