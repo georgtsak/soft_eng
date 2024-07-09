@@ -63,9 +63,14 @@
                             <li>
                                 <a class="nav-link text-secondary" asp-controller="Home" asp-action="Study"> ΣΠΟΥΔΕΣ </a>
                             </li>
-                            <li>
-                                <a class="nav-link text-secondary" asp-controller="Polls" asp-action="Index">ΔΗΜΟΣΚΟΠΗΣΕΙΣ</a>
-                            </li>
+                            @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
+                            {
+                                <li>
+                                    <a class="nav-link text-secondary" asp-controller="Polls" asp-action="Index">ΔΗΜΟΣΚΟΠΗΣΕΙΣ</a>
+                                </li>
+                            }
+
+                            
                         </ul>
                     </div>
                 </div>
