@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    Dictionary<string, int> pollDict = TempData["pollDict"] as Dictionary<string, int>;
 }
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
@@ -47,9 +48,10 @@
 </div>
 
 <script>
-    var votesData = @Html.Raw(Json.Serialize(Model.Votes));
+    var votesData = @Html.Raw(Json.Serialize(pollDict));
 
     var chartData = Object.keys(votesData).map(function (key) {
+        console.log([key, votesData[key]]);
         return [key, votesData[key]];
     });
 
