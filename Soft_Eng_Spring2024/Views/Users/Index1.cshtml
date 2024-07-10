@@ -52,7 +52,15 @@
                             <td>
                                 <a class="btn btn-outline-secondary" asp-action="Details" asp-route-id="@item.Id">Λεπτομέρειες</a>
                                 <a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@item.Id">Επεξεργασία</a>
-                                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Διαγραφή</a>
+                                @if (item.Role == 3)
+                                {
+                                    <input type="submit" value="Διαγραφή" disabled class="btn btn-outline-danger" />
+                                }
+                                else
+                                {
+                                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Διαγραφή</a>
+
+                                }
                             </td>
                         </tr>
                     }
