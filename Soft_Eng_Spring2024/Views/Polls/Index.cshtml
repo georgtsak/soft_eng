@@ -49,7 +49,18 @@
 
                                 <a class="btn @buttonClass" asp-action="Vote" asp-route-id="@item.Id">Συμμετοχή</a>
 
-                                <a class="btn btn-outline-secondary" asp-action="Details" asp-route-id="@item.Id">Λεπτομέρειες</a>
+                                @if (item.StartDate <= today)
+                                {
+                                    <a class="btn btn-outline-secondary" asp-action="Details" asp-route-id="@item.Id">Στατιστικά</a>
+
+                                }
+                                else
+                                {
+                                    <input type="submit" value="Στατιστικά" disabled class="btn btn-outline-secondary" />
+
+                                }
+
+
 
                                 @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
                                 {

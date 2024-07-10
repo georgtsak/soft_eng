@@ -1,48 +1,63 @@
 ﻿@model Soft_Eng_Spring2024.Models.Event
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Προσθήκη Περιεχομένου";
 }
 
-<h1>Create</h1>
+<link rel="stylesheet" type="text/css" href="~/css/forma_anakoin_events.css" />
+<link rel="stylesheet" type="text/css" href="~/css/auth.css" />
 
-<h4>Event</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+<div class="hero_area">
+    <div class="container">
+        <div class="forma-wrap">
+            <div class="forma-html">
+                <input id="tab-1" type="radio" name="tab" class="anakoinwsh"><label for="tab-1" class="tab">Ανακοίνωση</label>
+                <input id="tab-2" type="radio" name="tab" class="ekdhlwsh" checked><label for="tab-2" class="tab">Εκδήλωση</label>
+                <div class="login-form">
+
+                    @using (Html.BeginForm("Create", "Announcements", FormMethod.Post))
+                    {
+                        <div class="anakoinwsh-htm">
+                            <div class="group">
+                                <label class="label">Τίτλος</label>
+                                <input type="text" asp-for="Title" class="input">
+                            </div>
+                            <div class="group">
+                                <label class="label">Κείμενο</label>
+                                <textarea asp-for="Body" class="input" style="height: 100px; overflow-y:auto; min-height:55px; max-height: 150px;"></textarea>
+                            </div>
+                            <!--koubi-->
+                            <div class="hr"></div>
+                            <div class="group">
+                                <input type="hidden" asp-for="Author" value="@User.FindFirst("uId").Value" />
+                                <input type="submit" class="btn float-right login_btn" value="Προσθήκη Νέας Ανακοίνωσης">
+                            </div>
+                        </div>
+                    }
+
+                    @using (Html.BeginForm("Create", "Events", FormMethod.Post))
+                    {
+                        <div class="ekdhlwsh-htm">
+                            <div class="group">
+                                <label class="label">Τίτλος</label>
+                                <input asp-for="Title" type="text" class="input">
+                            </div>
+                            <div class="group">
+                                <label class="label">Κείμενο</label>
+                                <textarea asp-for="Body" class="input" style="height: 100px; overflow-y:auto; min-height:55px; max-height: 150px;"></textarea>
+                            </div>
+                            <!--koubi-->
+                            <div class="hr"></div>
+                            <div class="group" style="display: flex; justify-content: flex-end; align-items: center;">
+                                <input type="hidden" asp-for="Author" value="@User.FindFirst("uId").Value" />
+                                <input type="date" class="form-control mr-2" asp-for="Date" />
+                                <input type="submit" class="btn login_btn" value="Προσθήκη Νέας Εκδήλωσης">
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Body" class="control-label"></label>
-                <input asp-for="Body" class="form-control" />
-                <span asp-validation-for="Body" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Author" class="control-label"></label>
-                <input asp-for="Author" class="form-control" />
-                <span asp-validation-for="Author" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
