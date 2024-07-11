@@ -173,6 +173,7 @@ namespace Soft_Eng_Spring2024.Controllers
             {
                 try
                 {
+                    Hash_Password(user);
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }

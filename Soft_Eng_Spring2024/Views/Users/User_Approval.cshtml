@@ -21,6 +21,7 @@
 								<th>Ρόλος Χρήστη</th>
 								<th></th>
                                 <th></th>
+                                <th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -86,21 +87,28 @@
                                         </td>
                                             
                                     }
-                                        
-                                            @using (Html.BeginForm("Delete", "Users", FormMethod.Post))
+                                                                         
+                                    @using (Html.BeginForm("Delete", "Users", FormMethod.Post))
                                     {
-                                        <td>
-                                            <input type="hidden" name="Id" value="@item.Id" />
-                                            @if(item.Role==3){
+                                        <input type="hidden" name="Id" value="@item.Id" />
+                                        @if(item.Role==3){
+                                            <td>
+                                                <input type="submit" value="Επεξεργασία" disabled class="btn btn-outline-info" />
+                                            </td>
+                                            <td>
                                                 <input type="submit" value="Διαγραφή" disabled class="btn btn-outline-danger" />
-                                            }
-                                            else
-                                            {
+                                            </td>
+                                                
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@item.Id">Επεξεργασία</a>
+                                            </td>
+                                            <td>
                                                 <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Διαγραφή</a>
-
-                                            }
-                                            
-                                        </td>
+                                            </td>
+                                        }
                                     }
                                 </tr>
                             }     

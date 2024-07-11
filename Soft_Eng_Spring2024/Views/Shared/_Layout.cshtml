@@ -80,7 +80,7 @@
                     @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
                     {
                         <li>
-                            <a class="nav-link text-secondary" href="">@User.Identity.Name</a>
+                            <a class="nav-link text-secondary" asp-controller="Users" asp-action="Edit" asp-route-id="@User.FindFirst("uId").Value">@User.Identity.Name</a>
                         </li>
                         @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
                         {
@@ -90,9 +90,6 @@
                             </li>
                             <li>
                                 <a class="nav-link text-secondary" asp-controller="Polls" asp-action="Create">Δημιουργία Δημοσκόπησης</a>
-                            </li>
-                            <li>
-                                <a class="nav-link text-secondary" asp-controller="Users" asp-action="Index1">Χρήστες</a>
                             </li>
 
                         }
