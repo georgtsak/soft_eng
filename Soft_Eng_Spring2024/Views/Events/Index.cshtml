@@ -1,6 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Εκδηλώσεις - Τμήμα Πληροφορικής";
-}
+
+    Func<string, int, string> TruncateText = (text, length) =>
+    {
+        if (text.Length <= length)
+            return text;
+        else
+            return text.Substring(0, length) + "...";
+    };
+    }
 @model IEnumerable<Soft_Eng_Spring2024.Models.Event>
 
 <style>
@@ -27,7 +35,7 @@
 
 <div style="background-color:rgba(97,5,27,0.3);padding:20px;">
     <h1 style="margin-left:20px; font-weight:bold; color:#fff;">ΕΚΔΗΛΩΣΕΙΣ</h1>
-    @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
+    @if (User == null || User.Identity == null || !User.Identity.IsAuthenticated)
     {
         @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
         {
@@ -51,10 +59,10 @@
                                 <h4 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h4>
                             </div>
                             <div class="card-body">
-                                <p class="card-text">@Html.DisplayFor(modelItem => item.Body)</p>
+                                <p class="card-text">@Html.Raw(TruncateText(item.Body, 95))</p>
                                 <div class="button-container center">
                                     <a class="btn btn-outline-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">Περισσότερα</a>
-                                    @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
+                                    @if (User == null || User.Identity == null || !User.Identity.IsAuthenticated)
                                     {
                                         @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
                                         {
@@ -73,6 +81,3 @@
         </div>
     </div>
 </div>
-
-
-
