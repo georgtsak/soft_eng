@@ -1,4 +1,4 @@
-﻿@model Soft_Eng_Spring2024.Models.Poll
+﻿@model List<Soft_Eng_Spring2024.Models.Announcement>
 
 @{
     ViewData["Title"] = "Τμήμα Πληροφορικής";
@@ -219,77 +219,51 @@
     <!---->
     <!---->
 
-    <section class="blog_section layout_padding">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-10 ml-auto">
-                    <div class="heading_container">
-                        <h2>
-                            ΠΡΟΣΦΑΤΕΣ ΑΝΑΚΟΙΝΩΣΕΙΣ
-                        </h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 pl-0">
-                    <div class="box b1">
-                        <div class="img-box">
-                        <img src="~/images/anakoinwsh1.jpg" alt="">
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-8 col-md-10 ml-auto">
-                                <div class="detail-box">
-                                    <div class="img_date">
-                                        <h6>
-                                            30 <br>
-                                            Μαίου
-                                        </h6>
-                                    </div>
-                                    <h3>
-                                        Αξιολογήσεις μαθημάτων προπτυχιακού
-                                    </h3>
-                                    <p>
-                                        Καθώς ολοκληρώνονται οι διαλέξεις των μαθημάτων του εαρινού εξαμήνου για το προπτυχιακό μας πρόγραμμα σπουδών, το προσεχές διάστημα θα ξεκινήσουν οι αξιολογήσεις  για το εκάστοτε μάθημα-διδάσκοντα.
-                                    </p>
-                                    <a href="">
-                                        Περισσότερα
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 pr-0">
-                    <div class="box b2">
-                        <div class="img-box">
-                        <img src="~/images/anakoinwsh2.jpg" alt="">
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-8 col-md-10 mr-auto">
-                                <div class="detail-box">
-                                    <div class="img_date">
-                                        <h6>
-                                            17 <br>
-                                            Απρ
-                                        </h6>
-                                    </div>
-                                    <h3>
-                                        Ημερίδα Επαγγελματικού Προσανατολισμού
-                                    </h3>
-                                    <p>
-                                    text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text
-                                    </p>
-                                    <a href="">
-                                        Περισσότερα
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<section class="blog_section layout_padding">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 ml-auto">
+                <div class="heading_container">
+                    <h2>
+                        ΠΡΟΣΦΑΤΕΣ ΑΝΑΚΟΙΝΩΣΕΙΣ
+                    </h2>
                 </div>
             </div>
         </div>
-    </section>
+        <div class="row">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var announcement = Model[i];
+                var imagePath = i == 0 ? "~/images/anakoinwsh1.jpg" : "~/images/anakoinwsh2.jpg";
+
+                <div class="col-md-6 @(i == 0 ? "pl-0" : "pr-0")">
+                    <div class="box @(i == 0 ? "b1" : "b2")">
+                        <div class="img-box">
+                            <img src="@Url.Content(imagePath)" alt="">
+                        </div>
+                        <div class="row">
+                            <div class="@(i == 0 ? "col-lg-8 col-md-10 ml-auto" : "col-lg-8 col-md-10 mr-auto")">
+                                <div class="detail-box">
+                                    <div class="img_date">
+                                        <h6>
+                                            @announcement.Date.ToString("dd") <br>
+                                            @announcement.Date.ToString("MMM", new System.Globalization.CultureInfo("el-GR")).ToUpper()
+                                        </h6>
+                                    </div>
+                                    <h3>@announcement.Title</h3>
+                                    <p>@announcement.Body</p>
+                                    <a href="@Url.Action("Details", "Announcements", new { id = announcement.Id })">
+                                        Περισσότερα
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
 
     <!---->
     <!---->
