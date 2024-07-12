@@ -1,11 +1,17 @@
 ﻿@model Soft_Eng_Spring2024.Models.Poll
 
 @{
-    ViewData["Title"] = "Test";
+    ViewData["Title"] = "Δημοσκόπηση";
     Dictionary<string, int> pollDict = TempData["pollDict"] as Dictionary<string, int>;
     DateOnly today = DateOnly.FromDateTime(DateTime.Now);
 }
-
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/forma_anakoin_events.css" />
 <link rel="stylesheet" type="text/css" href="~/css/auth.css" />
 <style>
@@ -38,6 +44,7 @@
         display: none;
     }
 </style>
+
 <div class="hero_area">
     <div class="container">
         <div class="forma-wrap">
@@ -45,17 +52,14 @@
                 <p class="tab" style="color:#fff;border-color: #790621;">
                     @Html.DisplayFor(model=>model.Title)
                     <div class="login-form">
-                            @foreach (var item in pollDict)
-                            {
-                              <p style="color:#fff;">Ψήφοι για @item.Key : @item.Value </p>
-                            }
+                        <div id="chart-@Model.Id"></div>                    
                             @if (Model.StartDate <= today && today <= Model.FinishDate)
                             {
                                 @using (Html.BeginForm("Vote", "Polls", FormMethod.Post))
                                 {
                                     @foreach (var item in pollDict)
                                     {
-                                        <p class="tab" style="color:#fff;">@item.Key @Html.RadioButton("vote", item.Key)</p>
+                                        <p class="tab" style="color:#fff;">@item.Key @Html.RadioButton("vote", item.Key)</p><br/>
                                     }
                                     <div class="hr"></div>
                                     <div class="group">
@@ -96,6 +100,39 @@
                                 </svg>&nbsp;Η ψηφοφορία έχει λήξει!
                             </h6>
                             }
+
+                        <script>
+                            var votesData = @Html.Raw(Model.Votes);
+
+                            var chartData = Object.keys(votesData).map(function (key) {
+                                console.log([key, votesData[key]]);
+                                return [key, votesData[key]];
+                            });
+
+                            var totalVotes = Object.values(votesData).reduce(function (acc, voteCount) {
+                                return acc + voteCount;
+                            }, 0);
+
+                            var chart = bb.generate({
+                                data: {
+                                    columns: chartData,
+                                    type: "donut",
+                                    onclick: function (d, i) {
+                                        console.log("onclick", d, i);
+                                    },
+                                    onover: function (d, i) {
+                                        console.log("onover", d, i);
+                                    },
+                                    onout: function (d, i) {
+                                        console.log("onout", d, i);
+                                    },
+                                },
+                                donut: {
+                                    title: totalVotes.toString() + "\nΨήφοι",
+                                },
+                                bindto: "#chart-@Model.Id",
+                            });
+                        </script>
                     </div>
             </div>
         </div>
