@@ -23,11 +23,17 @@
                     <div class="col-md-4 mb-4">
                         <div class="card h-100">
                             <div class="card-body">
-                                <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                                @* Εδώ είναι ο τίτλος *@
+                                <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">@Html.DisplayFor(modelItem => item.Title)</h5>
+
+                                @* Εδώ είναι η ημερομηνία *@
                                 <p class="card-text">@Html.DisplayFor(modelItem => item.Date)</p>
+
                                 <div style="margin-bottom:2px;">
+                                    @* Εδώ είναι τα κουμπιά ενέργειας (περισσότερα, επεξεργασία, διαγραφή) *@
                                     <a class="btn btn-outline-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">Περισσότερα</a>
-                                    @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
+
+                                    @if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
                                     {
                                         @if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
                                         {
@@ -42,6 +48,7 @@
                             </div>
                         </div>
                     </div>
+
                 }
             </div>
         </div>

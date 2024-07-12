@@ -19,12 +19,19 @@ namespace Soft_Eng_Spring2024.Controllers
 
         public IActionResult Index()
         {
-            var latestAnnouncements = _context.Announcement
-                                               .OrderByDescending(a => a.Id)
-                                               .Take(2)
-                                               .ToList();
+            var viewModel = new PollAnnouncement
+            {
+                Poll = _context.Poll
+                                      .OrderByDescending(p => p.Id)
+                                      .FirstOrDefault(),
 
-            return View(latestAnnouncements);
+                Announcement = _context.Announcement
+                                              .OrderByDescending(a => a.Id)
+                                              .Take(2)
+                                              .ToList()
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Services()
