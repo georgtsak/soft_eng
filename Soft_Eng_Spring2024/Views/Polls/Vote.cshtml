@@ -5,6 +5,7 @@
     Dictionary<string, int> pollDict = TempData["pollDict"] as Dictionary<string, int>;
     DateOnly today = DateOnly.FromDateTime(DateTime.Now);
 }
+<script src="https://cdn.jsdelivr.net/npm/d3@5"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css" />
@@ -43,25 +44,58 @@
     .hidden {
         display: none;
     }
+    body{
+        background-color: #61051b;
+    }
+
+    .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .flex-item {
+        margin-right: 20px;
+        color: #fff;
+        font-size: 18px;
+        font-weight:bold;
+        display: flex;
+    }
+
+    .flex-item input[type="radio"] {
+        margin-right: 5px; /*apostash kyklou me text*/
+    }
+
+    .bb-legend-item text {
+        fill: #fff; 
+    }
+
+    .bb-chart-title {
+        fill: #fff;
+    }
 </style>
 
 <div class="hero_area">
     <div class="container">
         <div class="forma-wrap">
-            <div class="forma-html">
+            <div class="forma-html" style="padding-bottom:20px;">
                 <p class="tab" style="color:#fff;border-color: #790621;">
                     @Html.DisplayFor(model=>model.Title)
-                    <div class="login-form">
-                        <div id="chart-@Model.Id"></div>                    
+                    <div class="login-form" >
+                        <div id="chart-@Model.Id"></div> <br>                   
                             @if (Model.StartDate <= today && today <= Model.FinishDate)
                             {
                                 @using (Html.BeginForm("Vote", "Polls", FormMethod.Post))
                                 {
-                                    @foreach (var item in pollDict)
-                                    {
-                                        <p class="tab" style="color:#fff;">@item.Key @Html.RadioButton("vote", item.Key)</p><br/>
-                                    }
-                                    <div class="hr"></div>
+                                    
+                                    <div class="flex-container">
+                                        @foreach (var item in pollDict)
+                                        {
+                                            <div class="flex-item">
+                                                @Html.RadioButton("vote", item.Key) @item.Key
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="hr" style="margin-top:8px;"></div>
                                     <div class="group">
                                         <input type="hidden" value="@Model.Id)">
                                         @if (Model.Voters.Contains(Int32.Parse(User.FindFirst("uId").Value)))
@@ -82,26 +116,26 @@
                             }
                             else if (Model.StartDate > today) 
                             {
-                            <div class="hr"></div>
-                            <h6 class="p-1 mb-2 bg-danger text-white" style="display: inline-block;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
-                                </svg>&nbsp;Η ψηφοφορία δεν έχει ξεκινήσει!
-                            </h6>
+                                <div class="hr"></div>
+                                <h6 class="p-1 mb-2 bg-danger text-white" style="display: inline-block;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
+                                    </svg>&nbsp;Η ψηφοφορία δεν έχει ξεκινήσει!
+                                </h6>
                             }
                             else
                             {
-                            <div class="hr"></div>
-                            <h6 class="p-1 mb-2 bg-danger text-white" style="display: inline-block;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
-                                </svg>&nbsp;Η ψηφοφορία έχει λήξει!
-                            </h6>
+                                <div class="hr"></div>
+                                <h6 class="p-1 mb-2 bg-danger text-white" style="display: inline-block;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
+                                    </svg>&nbsp;Η ψηφοφορία έχει λήξει!
+                                </h6>
                             }
 
-                        <script>
+                        <script type="text/javascript">
                             var votesData = @Html.Raw(Model.Votes);
 
                             var chartData = Object.keys(votesData).map(function (key) {
@@ -129,6 +163,7 @@
                                 },
                                 donut: {
                                     title: totalVotes.toString() + "\nΨήφοι",
+                                    color: "#fff"
                                 },
                                 bindto: "#chart-@Model.Id",
                             });

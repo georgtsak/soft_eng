@@ -69,15 +69,15 @@
                                                 @{
                                                     bool isVotingOpen = item.StartDate <= today && today <= item.FinishDate;
                                                     bool hasUserVoted = item.Voters.Contains(Int32.Parse(User.FindFirst("uId").Value));
-                                                    string buttonClass = "btn-outline-secondary";
+                                                    string buttonClass = "btn-secondary";
 
                                                     if (isVotingOpen && !hasUserVoted)
                                                     {
-                                                        buttonClass = "btn-outline-success";
+                                                        buttonClass = "btn-success";
                                                     }
                                                 }
 
-                                                <a class="btn @buttonClass " asp-action="Vote" asp-route-id="@item.Id">Συμμετοχή</a>
+                                                <a class="btn @buttonClass" asp-action="Vote" asp-route-id="@item.Id">Συμμετοχή</a>
                                             </div>
                                         </td>
                                     </tr>

@@ -19,11 +19,13 @@ namespace Soft_Eng_Spring2024.Controllers
 
         public IActionResult Index()
         {
+            var today = DateOnly.FromDateTime(DateTime.Today);
             var viewModel = new PollAnnouncement
             {
                 Poll = _context.Poll
-                                      .OrderByDescending(p => p.Id)
-                                      .FirstOrDefault(),
+                                      .Where(p => p.StartDate <= today)
+                               .OrderByDescending(p => p.Id)
+                               .FirstOrDefault(),
 
                 Announcement = _context.Announcement
                                               .OrderByDescending(a => a.Id)

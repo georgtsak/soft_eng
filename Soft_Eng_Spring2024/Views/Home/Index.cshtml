@@ -3,6 +3,8 @@
     ViewData["Title"] = "Τμήμα Πληροφορικής";
     DateOnly today = DateOnly.FromDateTime(DateTime.Now);
     Dictionary<string, int> pollDict = TempData["pollDict"] as Dictionary<string, int>;
+    var latestPoll = Model.Poll;
+
 }
 <style>
     .detail-box {
@@ -394,28 +396,37 @@
                         <!-- send-->
 
                         <section class="contact_section">
-                            <h2>
-                                Polls
-                            </h2>
-                            <form action="">
-                                <div>
-                                    <input type="text" placeholder="2" />
-                                </div>
-                                <div>
-                                    <input type="text" placeholder="2" />
-                                </div>
-                                <div>
-                                    <input type="email" placeholder="3" />
-                                </div>
-                                <div>
-                                    <input type="text" class="message-box" placeholder="4" />
-                                </div>
-                                <div class="d-flex ">
-                                    <button class="btn-1">
-                                        Αποστολή
-                                    </button>
-                                </div>
-                            </form>
+                            <section class="poll_section">
+                                <h2>ΠΡΟΣΦΑΤΟ POLL</h2>
+                                @if (latestPoll != null)
+                                {
+                                    <div style="padding-top: 40px; padding-bottom: 40px; padding: 10px; width: 400px; height: 450px;">
+                                        <h4 style="color: #fff;">
+                                            <b>@latestPoll.Title</b>
+                                        </h4>
+                                        <h6 style="color: #808080; display: inline;">
+                                            <i>@latestPoll.StartDate.ToString("dd/MM/yyyy")</i>
+                                        </h6>
+                                        <h6 style="color: #808080; display: inline;">
+                                            - <i>@latestPoll.FinishDate.ToString("dd/MM/yyyy")</i>
+                                        </h6>
+
+                                        <div id="chart-@latestPoll.Id"></div>
+
+
+                                        
+                                        @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="btn btn-outline-success" asp-action="Vote" asp-controller="Polls" asp-route-id="@latestPoll.Id">Συμμετοχή</a>   
+                                        }
+                                        
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p>Δεν υπάρχει κανένα poll αυτή τη στιγμή.</p>
+                                }
+                            </section>
                             <div class="map_container">
                                 <div class="map">
                                     <div id="googleMap" style="width:100%;height:300px;"></div>
@@ -518,3 +529,37 @@
         <!-- google map -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
         <!-- end google map -->
+
+
+<script>
+    var votesData = @Html.Raw(Json.Serialize(latestPoll.Votes));
+
+    var chartData = Object.keys(votesData).map(function (key) {
+        return [key, votesData[key]];
+    });
+
+    var totalVotes = Object.values(votesData).reduce(function (acc, voteCount) {
+        return acc + voteCount;
+    }, 0);
+
+    var chart = bb.generate({
+        data: {
+            columns: chartData,
+            type: "donut",
+            onclick: function (d, i) {
+                console.log("onclick", d, i);
+            },
+            onover: function (d, i) {
+                console.log("onover", d, i);
+            },
+            onout: function (d, i) {
+                console.log("onout", d, i);
+            },
+        },
+        donut: {
+            title: totalVotes.toString() + "\nΨήφοι",
+        },
+        bindto: "#chart-@latestPoll.Id",
+    });
+</script>
+
