@@ -204,7 +204,7 @@ namespace Soft_Eng_Spring2024.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details2));
             }
             return View(poll);
         }
