@@ -28,6 +28,22 @@ namespace Soft_Eng_Spring2024.Controllers
             return View(await _context.Poll.ToListAsync());
         }
 
+        public void addVotes(List<Poll> polls)
+        {
+            Random rnd = new Random();
+            foreach (Poll poll in polls)
+            {
+                var v = DeserializeVotes(poll.Votes);
+                foreach (var key in v.Keys)
+                {
+                    v[key] += rnd.Next(20, 50);
+                }
+                poll.Votes = SerializeVotes(v);
+                _context.Update(poll);
+            }
+            _context.SaveChangesAsync();
+        }
+
         // GET: Polls/Details/5
         public async Task<IActionResult> Details(int? id)
         {
