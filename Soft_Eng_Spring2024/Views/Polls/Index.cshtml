@@ -3,78 +3,90 @@
 @{
     ViewData["Title"] = "Index";
     DateOnly today = DateOnly.FromDateTime(DateTime.Now);
-}
-<div style="background-color:rgb(97,5,27,0.3);padding:20px;">
-    <h1 style="margin-left:20px; font-weight:bold; color:#fff;">ΔΗΜΟΣΚΟΠΗΣΕΙΣ</h1>
 
-    @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
+    Func<string, int, string> TruncateText = (text, length) =>
     {
-        if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
-        {
-            <p>
-                <a class="btn btn-secondary" asp-action="Create" style="margin-left: 20px;">Δημιουργία νέας δημοσκόπησης +</a>
-            </p>
-        }
-    }
+        if (text.Length <= length)
+            return text;
+        else
+            return text.Substring(0, length) + "...";
+    };
+}
+<div class="hero_area">
+    <div style="background-color:rgb(97,5,27,0.3);padding:20px;">
+        <h1 style="margin-left:20px; font-weight:bold; color:#fff;">ΔΗΜΟΣΚΟΠΗΣΕΙΣ</h1>
 
-    <div class="card mb-3" style="background-color: rgba(16, 16, 16, 0.5); margin:20px;display:inline-block;">
-        <div class="card-body">
-            <table class="table table-striped" style="color:white;">
-                <thead>
-                    <tr>
-                        <th scope="col">Τίτλος</th>
-                        <th scope="col">Ημερομ. Έναρξης</th>
-                        <th scope="col">Ημερομ. Λήξης</th>
-                        <th scope="col">Ενέργειες</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.OrderByDescending(m => m.Id))
-                    {
+        <div class="card" style="background-color: transparent;">
+            @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
+            {
+                if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
+                {
+                    <p>
+                        <a class="btn btn-secondary" asp-action="Create" style="margin-left: 20px;">Δημιουργία νέας δημοσκόπησης +</a>
+                    </p>
+                }
+            }
+        </div>
+
+        <div class="card mb-3" style="background-color: rgba(16, 16, 16, 0.5); margin:20px;display:inline-block;">
+            <div class="card-body">
+                <table class="table table-striped" style="color:white;">
+                    <thead>
                         <tr>
-                            <td>@Html.DisplayFor(modelItem => item.Title)</td>
-                            <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
-                            <td>@Html.DisplayFor(modelItem => item.FinishDate)</td>
-                            <td>
-                                @{
-                                    bool isVotingOpen = item.StartDate <= today && today <= item.FinishDate;
-                                    bool hasUserVoted = item.Voters.Contains(Int32.Parse(User.FindFirst("uId").Value));
-                                    string buttonClass = "btn-outline-secondary";
-
-                                    if (isVotingOpen && !hasUserVoted)
-                                    {
-                                        buttonClass = "btn-outline-success";
-                                    }
-                                }
-
-                                <a class="btn @buttonClass" asp-action="Vote" asp-route-id="@item.Id">Συμμετοχή</a>
-
-                                @if (item.StartDate <= today)
-                                {
-                                    <a class="btn btn-outline-secondary" asp-action="Details2" asp-route-id="@item.Id">Στατιστικά</a>
-
-                                }
-                                else
-                                {
-                                    <input type="submit" value="Στατιστικά" disabled class="btn btn-outline-secondary" />
-
-                                }
-
-
-
-                                @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
-                                {
-                                    if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
-                                    {
-                                        <a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@item.Id">Επεξεργασία</a>
-                                        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Διαγραφή</a>
-                                    }
-                                }
-                            </td>
+                            <th scope="col">Τίτλος</th>
+                            <th scope="col">Ημερομ. Έναρξης</th>
+                            <th scope="col">Ημερομ. Λήξης</th>
+                            <th scope="col">Ενέργειες</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderByDescending(m => m.Id))
+                        {
+                            <tr>
+                                <td>@TruncateText(item.Title, 50)</td>
+                                <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
+                                <td>@Html.DisplayFor(modelItem => item.FinishDate)</td>
+                                <td>
+                                    @{
+                                        bool isVotingOpen = item.StartDate <= today && today <= item.FinishDate;
+                                        bool hasUserVoted = item.Voters.Contains(Int32.Parse(User.FindFirst("uId").Value));
+                                        string buttonClass = "btn-outline-secondary";
+
+                                        if (isVotingOpen && !hasUserVoted)
+                                        {
+                                            buttonClass = "btn-outline-success";
+                                        }
+                                    }
+
+                                    <a class="btn @buttonClass" asp-action="Vote" asp-route-id="@item.Id">Συμμετοχή</a>
+
+                                    @if (item.StartDate <= today)
+                                    {
+                                        <a class="btn btn-outline-secondary" asp-action="Details2" asp-route-id="@item.Id">Στατιστικά</a>
+
+                                    }
+                                    else
+                                    {
+                                        <input type="submit" value="Στατιστικά" disabled class="btn btn-outline-secondary" />
+
+                                    }
+
+
+
+                                    @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
+                                    {
+                                        if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
+                                        {
+                                            <a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@item.Id">Επεξεργασία</a>
+                                            <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Διαγραφή</a>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

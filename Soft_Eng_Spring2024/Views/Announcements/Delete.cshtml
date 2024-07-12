@@ -4,41 +4,45 @@
     ViewData["Title"] = "Delete";
 }
 
-
-<div style="background-color:rgb(16,16,16,0.5);color:white;margin:10px;margin-right:200px;margin-left:200px;padding:50px;">
-    <h1><b>ΔΙΑΓΡΑΦΗ ΑΝΑΚΟΙΝΩΣΗΣ</b></h1>
-    <h6 class="p-1 mb-2 bg-danger text-white" style="display: inline-block;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
-            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-            <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
-        </svg>&nbsp;Είστε σίγουροι ότι θέλετε να διαγράψετε την ανακοίνωση;
-    </h6>
-
-    
-    <br><br>
-
-    <div style="background-color:rgb(255,255,255,0.12);padding-top:40px;padding-bottom:40px;padding:10px;width:auto;">
-        <h3>
-            <b>@Html.DisplayFor(model => model.Title)</b>
-        </h3>
-
-        <div>
-            <span style="color:#808080; margin-right: 10px;"><i>@Html.DisplayFor(model => model.Date) • </i></span>
-            <span style="color:#808080;"><i>Δημιουργός: @Html.DisplayFor(model => model.Author)</i></span>
-        </div><br>
-        <h5>@Html.DisplayFor(model => model.Body)</h5>
+<div class="hero_area">
+    <div class="card" style="background-color: transparent;">
+        <div style="background-color:rgb(16,16,16,0.5);color:white;margin:10px;margin-right:200px;margin-left:200px;padding:50px;">
+            <h1><b>ΔΙΑΓΡΑΦΗ ΑΝΑΚΟΙΝΩΣΗΣ</b></h1>
+            <h6 class="p-1 mb-2 bg-danger text-white" style="display: inline-block;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
+                </svg>&nbsp;Είστε σίγουροι ότι θέλετε να διαγράψετε την ανακοίνωση;
+            </h6>
 
 
+            <br><br>
+
+            <div style="background-color:rgb(255,255,255,0.12);padding-top:40px;padding-bottom:40px;padding:10px;width:auto;">
+                <h3>
+                    <b>@Html.DisplayFor(model => model.Title)</b>
+                </h3>
+
+                <div>
+                    <span style="color:#808080; margin-right: 10px;"><i>@Html.DisplayFor(model => model.Date) • </i></span>
+                    <span style="color:#808080;"><i>Δημιουργός: @Html.DisplayFor(model => model.Author)</i></span>
+                </div><br>
+                <h5>@Html.DisplayFor(model => model.Body)</h5>
+
+
+
+            </div>
+            <div>
+                <br><br>
+
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="submit" value="Διαγραφή" class="btn btn-danger" />
+                    <a asp-action="Index" class="btn btn-outline-secondary">Επιστροφή</a>
+                </form>
+            </div>
+
+        </div>
 
     </div>
-    <div>
-        <br><br>
-
-        <form asp-action="Delete">
-            <input type="hidden" asp-for="Id" />
-            <input type="submit" value="Διαγραφή" class="btn btn-danger" />
-            <a asp-action="Index" class="btn btn-outline-secondary">Επιστροφή</a>
-        </form>
-    </div>
-
 </div>

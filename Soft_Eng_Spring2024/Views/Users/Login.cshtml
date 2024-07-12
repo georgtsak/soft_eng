@@ -5,40 +5,42 @@
 <link rel="stylesheet" type="text/css" href="~/css/auth.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-<div class="container">
-	<div class="d-flex justify-content-center h-100">
-		<div class="card">
-			<div class="card-header">
-				<h3>Είσοδος στον λογαριασμό</h3>
-			</div>
-			<div class="card-body">
-				<form asp-action="Login" name="login_form" onsubmit="return elegxos_null()">
-					<div class="input-group form-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-envelope"></i></span>
-						</div>
-						<input type="email" asp-for="Email" name="email" class="form-control" placeholder="Email">
-					</div>
-					<div class="input-group form-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-key"></i></span>
-						</div>
-						<input type="password" asp-for="Password" minlength="8" id="password" name="password" class="form-control" placeholder="Κωδικός Πρόσβασης">
-					</div>
-					<div class="row align-items-center show">
-						<input type="checkbox" onclick="emfanish_kwdikou()">&nbsp;Εμφάνιση Κωδικού
-					</div>
-					<div class="form-group">
-						<input type="submit" value="Σύνδεση" class="btn float-right login_btn">
-					</div>
-				</form>
-			</div>
-			<div class="card-footer">
-				<div class="d-flex justify-content-center links">
-					Δεν έχετε λογαριασμό;<a asp-action="Register">Εγγραφή</a>
+<div class="hero_area">
+	<div class="container">
+		<div class="d-flex justify-content-center h-100">
+			<div class="card">
+				<div class="card-header">
+					<h3>Είσοδος στον λογαριασμό</h3>
 				</div>
-				<div class="d-flex justify-content-center">
-					<a href="#">Ξεχάσατε τον κωδικό σας;</a>
+				<div class="card-body">
+					<form asp-action="Login" name="login_form" onsubmit="return elegxos_null()">
+						<div class="input-group form-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="fas fa-envelope"></i></span>
+							</div>
+							<input type="email" asp-for="Email" name="email" class="form-control" placeholder="Email">
+						</div>
+						<div class="input-group form-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="fas fa-key"></i></span>
+							</div>
+							<input type="password" asp-for="Password" minlength="8" id="password" name="password" class="form-control" placeholder="Κωδικός Πρόσβασης">
+						</div>
+						<div class="row align-items-center show">
+							<input type="checkbox" onclick="emfanish_kwdikou()">&nbsp;Εμφάνιση Κωδικού
+						</div>
+						<div class="form-group">
+							<input type="submit" value="Σύνδεση" class="btn float-right login_btn">
+						</div>
+					</form>
+				</div>
+				<div class="card-footer">
+					<div class="d-flex justify-content-center links">
+						Δεν έχετε λογαριασμό;<a asp-action="Register">Εγγραφή</a>
+					</div>
+					<div class="d-flex justify-content-center">
+						<a href="#">Ξεχάσατε τον κωδικό σας;</a>
+					</div>
 				</div>
 			</div>
 		</div>

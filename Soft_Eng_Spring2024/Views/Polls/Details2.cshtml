@@ -3,6 +3,14 @@
 @{
     ViewData["Title"] = "Details";
     DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+
+    Func<string, int, string> TruncateText = (text, length) =>
+    {
+        if (text.Length <= length)
+            return text;
+        else
+            return text.Substring(0, length) + "...;";
+    };
 }
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -12,77 +20,106 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js"></script>
-
-<div style="background-color: rgb(97, 5, 27, 0.3); padding: 20px;">
-    <h1 style="margin-left: 20px; font-weight: bold; color: #fff;">ΑΠΟΤΕΛΕΣΜΑ ΔΗΜΟΣΚΟΠΗΣΗΣ</h1>
-
-    @foreach (var item in Model.OrderByDescending(m => m.Id))
-    {
-        if (item.StartDate<=today)
-        {
-            <div class="card mb-3" style="background-color: rgba(16, 16, 16, 0.5); margin: 20px; display: inline-block;">
-                <div class="card-body">
-                    <table class="table table-striped" style="color: white;">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div style="background-color: rgb(255, 255, 255, 0.12); padding-top: 40px; padding-bottom: 40px; padding: 10px; width: auto;">
-                                        <h3>
-                                            <b>@item.Title</b>
-                                        </h3>
-                                        <h6 style="color: #808080; display: inline;"><i>@item.StartDate</i></h6>
-                                        <h6 style="color: #808080; display: inline;"> - <i>@item.FinishDate</i></h6>
-
-                                        <div id="chart-@item.Id"></div>
-
-                                        @{
-                                            bool isVotingOpen = item.StartDate <= today && today <= item.FinishDate;
-                                            bool hasUserVoted = item.Voters.Contains(Int32.Parse(User.FindFirst("uId").Value));
-                                            string buttonClass = "btn-outline-secondary";
-
-                                            if (isVotingOpen && !hasUserVoted)
-                                            {
-                                                buttonClass = "btn-outline-success";
-                                            }
-                                        }
-
-                                        <a class="btn @buttonClass" asp-action="Vote" asp-route-id="@item.Id">Συμμετοχή</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <script>
-                var votesData = @Html.Raw(item.Votes);
-
-                var chartData = Object.keys(votesData).map(function (key) {
-                    console.log([key, votesData[key]]);
-                    return [key, votesData[key]];
-                });
-
-                var chart = bb.generate({
-                    data: {
-                        columns: chartData,
-                        type: "donut",
-                        onclick: function (d, i) {
-                            console.log("onclick", d, i);
-                        },
-                        onover: function (d, i) {
-                            console.log("onover", d, i);
-                        },
-                        onout: function (d, i) {
-                            console.log("onout", d, i);
-                        },
-                    },
-                    donut: {
-                        title: "Votes",
-                    },
-                    bindto: "#chart-@item.Id",
-                });
-            </script>
-        }
+<style>
+    body {
+        background-color: #61051b;
     }
+</style>
+
+<div class="hero_area">
+        <h1 style="font-weight: bold; color: #fff;text-align:center;">ΔΗΜΟΣΚΟΠΗΣΕΙΣ</h1>
+        <div class="card" style="background-color: transparent; text-align: center;">
+            @if (User == null || User.Identity == null || User.Identity.IsAuthenticated)
+            {
+                if (User.FindFirst("Role").Value == "2" || User.FindFirst("Role").Value == "3")
+                {
+                    <div class="d-flex justify-content-center">
+                        <div class="p-2">
+                            <a class="btn btn-secondary" asp-action="Create" style="margin-left: 20px;">Δημιουργία νέας δημοσκόπησης +</a>
+                        </div>
+                        <div class="p-2">
+                            <a class="btn btn-secondary" asp-action="Index" style="margin-left: 20px;">Τροποποίηση Δημοσκοπήσεων</a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+
+        <div style="padding:20px;">
+            @foreach (var item in Model.OrderByDescending(m => m.Id))
+            {
+                if (item.StartDate <= today)
+                {
+                    <div class="card mb-3" style="background-color: rgba(255, 255, 255, 0.12); margin: 20px; display: inline-block;">
+                        <div class="card-body">
+                            <table class="table table-striped" style="color: white;">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div style="padding-top: 40px; padding-bottom: 40px; padding: 10px; width: 400px; height:450px;">
+                                            <h4 style="color:black;">
+                                                <b>@TruncateText(item.Title, 35)</b>
+                                            </h4>
+                                                <h6 style="color: #808080; display: inline;"><i>@item.StartDate</i></h6>
+                                                <h6 style="color: #808080; display: inline;"> - <i>@item.FinishDate</i></h6>
+
+                                                <div id="chart-@item.Id"></div>
+
+                                                @{
+                                                    bool isVotingOpen = item.StartDate <= today && today <= item.FinishDate;
+                                                    bool hasUserVoted = item.Voters.Contains(Int32.Parse(User.FindFirst("uId").Value));
+                                                    string buttonClass = "btn-outline-secondary";
+
+                                                    if (isVotingOpen && !hasUserVoted)
+                                                    {
+                                                        buttonClass = "btn-outline-success";
+                                                    }
+                                                }
+
+                                                <a class="btn @buttonClass " asp-action="Vote" asp-route-id="@item.Id">Συμμετοχή</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <script>
+                        var votesData = @Html.Raw(item.Votes);
+
+                        var chartData = Object.keys(votesData).map(function (key) {
+                            console.log([key, votesData[key]]);
+                            return [key, votesData[key]];
+                        });
+
+                        var totalVotes = Object.values(votesData).reduce(function (acc, voteCount) {
+                            return acc + voteCount;
+                        }, 0);
+
+                        var chart = bb.generate({
+                            data: {
+                                columns: chartData,
+                                type: "donut",
+                                onclick: function (d, i) {
+                                    console.log("onclick", d, i);
+                                },
+                                onover: function (d, i) {
+                                    console.log("onover", d, i);
+                                },
+                                onout: function (d, i) {
+                                    console.log("onout", d, i);
+                                },
+                            },
+                            donut: {
+                                title: totalVotes.toString() + "\nΨήφοι",
+                            },
+                            bindto: "#chart-@item.Id",
+                        });
+                    </script>
+                }
+            }
+        </div>
+    </div>
 </div>
