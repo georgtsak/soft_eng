@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace Soft_Eng_Spring2024.Controllers
         }
 
         // GET: Polls
+        [Authorize(Policy = "MustBeAdmin")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Poll.ToListAsync());
@@ -44,6 +46,7 @@ namespace Soft_Eng_Spring2024.Controllers
             _context.SaveChangesAsync();
         }
 
+        [Authorize(Policy = "MustBeAdmin")]
         // GET: Polls/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -67,18 +70,19 @@ namespace Soft_Eng_Spring2024.Controllers
             return View(await _context.Poll.ToListAsync());
         }
 
-
+        [Authorize(Policy = "AdminOrProfessor")]
         // GET: Polls/Create
         public IActionResult Create()
         {
             return View();
         }
-
+        
         // POST: Polls/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "AdminOrProfessor")]
         public async Task<IActionResult> Create([Bind("Id,Title,StartDate,FinishDate,Votes,Voters")] Poll poll , string[] pollColumn)
         {
             if (ModelState.IsValid)
@@ -92,6 +96,7 @@ namespace Soft_Eng_Spring2024.Controllers
         }
 
         // GET: Polls/Edit/5
+        [Authorize(Policy = "AdminOrProfessor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -112,6 +117,7 @@ namespace Soft_Eng_Spring2024.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "AdminOrProfessor")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,StartDate,FinishDate,Votes,Voters")] Poll poll)
         {
             if (id != poll.Id)
@@ -142,6 +148,7 @@ namespace Soft_Eng_Spring2024.Controllers
             return View(poll);
         }
 
+        [Authorize]
         public async Task<IActionResult> Vote(int? id)
         {
             if (id == null)
@@ -157,7 +164,7 @@ namespace Soft_Eng_Spring2024.Controllers
             TempData["pollDict"] = DeserializeVotes(poll.Votes);
             return View(poll);
         }
-
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Vote(int? id,string vote)
@@ -203,6 +210,7 @@ namespace Soft_Eng_Spring2024.Controllers
         }
 
         // GET: Polls/Delete/5
+        [Authorize(Policy = "AdminOrProfessor")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -221,6 +229,7 @@ namespace Soft_Eng_Spring2024.Controllers
         }
 
         // POST: Polls/Delete/5
+        [Authorize(Policy = "AdminOrProfessor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -27,6 +27,7 @@ namespace Soft_Eng_Spring2024.Controllers
         }
 
         // GET: Users
+        [Authorize(Policy = "MustBeAdmin")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Users.ToListAsync());
@@ -92,7 +93,7 @@ namespace Soft_Eng_Spring2024.Controllers
         }
 
 
-        [Authorize(Policy="AdminOrProfessor")]
+        [Authorize(Policy = "MustBeAdmin")]
         // GET: Users/Create
         public IActionResult Create()
         {
@@ -110,13 +111,14 @@ namespace Soft_Eng_Spring2024.Controllers
         {
             return View();
         }
-
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync("CookieAuth");
             return RedirectToAction("Index","Home");
         }
 
+        [Authorize(Policy = "MustBeAdmin")]
         // Users/Index1
         public IActionResult Index1()
         {
@@ -130,6 +132,7 @@ namespace Soft_Eng_Spring2024.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "MustBeAdmin")]
         public async Task<IActionResult> Create([Bind("Id,Firstname,Lastname,Email,Password,Role")] User user)
         {
             if (ModelState.IsValid)
@@ -141,6 +144,7 @@ namespace Soft_Eng_Spring2024.Controllers
             return View(user);
         }
 
+        [Authorize]
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -162,6 +166,7 @@ namespace Soft_Eng_Spring2024.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Firstname,Lastname,Email,Password,Role")] User user)
         {
             if (id != user.Id)
@@ -193,6 +198,7 @@ namespace Soft_Eng_Spring2024.Controllers
             return View(user);
         }
 
+        [Authorize(Policy = "MustBeAdmin")]
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -211,6 +217,7 @@ namespace Soft_Eng_Spring2024.Controllers
             return View(user);
         }
 
+        [Authorize(Policy = "MustBeAdmin")]
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

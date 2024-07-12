@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -42,7 +43,7 @@ namespace Soft_Eng_Spring2024.Controllers
 
             return View(announcement);
         }
-
+        [Authorize(Policy = "AdminOrProfessor")]
         // GET: Announcements/Create
         public IActionResult Create()
         {
@@ -54,6 +55,7 @@ namespace Soft_Eng_Spring2024.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "AdminOrProfessor")]
         public async Task<IActionResult> Create([Bind("Id,Date,Title,Body,Author")] Announcement announcement)
         {
             if (ModelState.IsValid)
@@ -66,6 +68,7 @@ namespace Soft_Eng_Spring2024.Controllers
         }
 
         // GET: Announcements/Edit/5
+        [Authorize(Policy = "AdminOrProfessor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +89,7 @@ namespace Soft_Eng_Spring2024.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "AdminOrProfessor")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Title,Body,Author")] Announcement announcement)
         {
             if (id != announcement.Id)
@@ -117,6 +121,7 @@ namespace Soft_Eng_Spring2024.Controllers
         }
 
         // GET: Announcements/Delete/5
+        [Authorize(Policy = "AdminOrProfessor")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +142,7 @@ namespace Soft_Eng_Spring2024.Controllers
         // POST: Announcements/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "AdminOrProfessor")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var announcement = await _context.Announcement.FindAsync(id);

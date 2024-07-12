@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +44,7 @@ namespace Soft_Eng_Spring2024.Controllers
             return View(@event);
         }
 
+        [Authorize(Policy = "AdminOrProfessor")]
         // GET: Events/Create
         public IActionResult Create()
         {
@@ -54,6 +56,7 @@ namespace Soft_Eng_Spring2024.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "AdminOrProfessor")]
         public async Task<IActionResult> Create([Bind("Id,Date,Title,Body,Author")] Event @event)
         {
             if (ModelState.IsValid)
@@ -64,7 +67,7 @@ namespace Soft_Eng_Spring2024.Controllers
             }
             return View(@event);
         }
-
+        [Authorize(Policy = "AdminOrProfessor")]
         // GET: Events/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -86,6 +89,7 @@ namespace Soft_Eng_Spring2024.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "AdminOrProfessor")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Title,Body,Author")] Event @event)
         {
             if (id != @event.Id)
@@ -117,6 +121,7 @@ namespace Soft_Eng_Spring2024.Controllers
         }
 
         // GET: Events/Delete/5
+        [Authorize(Policy = "AdminOrProfessor")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +142,7 @@ namespace Soft_Eng_Spring2024.Controllers
         // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "AdminOrProfessor")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var @event = await _context.Event.FindAsync(id);
