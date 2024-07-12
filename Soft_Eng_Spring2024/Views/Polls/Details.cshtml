@@ -1,10 +1,8 @@
-﻿@model IEnumerable<Soft_Eng_Spring2024.Models.Poll>
+﻿@model Soft_Eng_Spring2024.Models.Poll
 
 @{
     ViewData["Title"] = "Details";
     DateOnly today = DateOnly.FromDateTime(DateTime.Now);
-    Dictionary<string, int> pollDict = TempData["pollDict"] as Dictionary<string, int>;
-
 }
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -17,9 +15,6 @@
 
 <div style="background-color: rgb(97, 5, 27, 0.3); padding: 20px;">
     <h1 style="margin-left: 20px; font-weight: bold; color: #fff;">ΑΠΟΤΕΛΕΣΜΑ ΔΗΜΟΣΚΟΠΗΣΗΣ</h1>
-
-    @foreach (var item in Model.OrderByDescending(m => m.Id))
-    {
         <div class="card mb-3" style="background-color: rgba(16, 16, 16, 0.5); margin: 20px; display: inline-block;">
             <div class="card-body">
                 <table class="table table-striped" style="color: white;">
@@ -28,16 +23,16 @@
                             <td>
                                 <div style="background-color: rgb(255, 255, 255, 0.12); padding-top: 40px; padding-bottom: 40px; padding: 10px; width: auto;">
                                     <h3>
-                                        <b>@item.Title</b>
+                                        <b>@Model.Title</b>
                                     </h3>
-                                    <h6 style="color: #808080; display: inline;"><i>@item.StartDate</i></h6>
-                                    <h6 style="color: #808080; display: inline;"> - <i>@item.FinishDate</i></h6>
+                                    <h6 style="color: #808080; display: inline;"><i>@Model.StartDate</i></h6>
+                                    <h6 style="color: #808080; display: inline;"> - <i>@Model.FinishDate</i></h6>
 
-                                    <div id="chart-@item.Id"></div>
+                                    <div id="chart"></div>
 
                                     @{
-                                        bool isVotingOpen = item.StartDate <= today && today <= item.FinishDate;
-                                        bool hasUserVoted = item.Voters.Contains(Int32.Parse(User.FindFirst("uId").Value));
+                                        bool isVotingOpen = Model.StartDate <= today && today <= Model.FinishDate;
+                                        bool hasUserVoted = Model.Voters.Contains(Int32.Parse(User.FindFirst("uId").Value));
                                         string buttonClass = "btn-outline-secondary";
 
                                         if (isVotingOpen && !hasUserVoted)
@@ -46,7 +41,7 @@
                                         }
                                     }
 
-                                    <a class="btn @buttonClass" asp-action="Vote" asp-route-id="@item.Id">Συμμετοχή</a>
+                                    <a class="btn @buttonClass" asp-action="Vote" asp-route-id="@Model.Id">Συμμετοχή</a>
                                 </div>
                             </td>
                         </tr>
@@ -55,11 +50,11 @@
             </div>
         </div>
     }
-
 </div>
 
+
 <script>
-    var votesData = @Html.Raw(Json.Serialize(pollDict));
+    var votesData = @Html.Raw(Model.Votes);
 
     var chartData = Object.keys(votesData).map(function (key) {
         console.log([key, votesData[key]]);

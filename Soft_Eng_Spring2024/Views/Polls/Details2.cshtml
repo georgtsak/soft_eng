@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Soft_Eng_Spring2024.Models.Poll>
+
+@{
+    ViewData["Title"] = "Details";
+    DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+}
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js"></script>
+
+<div style="background-color: rgb(97, 5, 27, 0.3); padding: 20px;">
+    <h1 style="margin-left: 20px; font-weight: bold; color: #fff;">ΑΠΟΤΕΛΕΣΜΑ ΔΗΜΟΣΚΟΠΗΣΗΣ</h1>
+
+    @foreach (var item in Model.OrderByDescending(m => m.Id))
+    {
+        if (item.StartDate<=today)
+        {
+            <div class="card mb-3" style="background-color: rgba(16, 16, 16, 0.5); margin: 20px; display: inline-block;">
+                <div class="card-body">
+                    <table class="table table-striped" style="color: white;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="background-color: rgb(255, 255, 255, 0.12); padding-top: 40px; padding-bottom: 40px; padding: 10px; width: auto;">
+                                        <h3>
+                                            <b>@item.Title</b>
+                                        </h3>
+                                        <h6 style="color: #808080; display: inline;"><i>@item.StartDate</i></h6>
+                                        <h6 style="color: #808080; display: inline;"> - <i>@item.FinishDate</i></h6>
+
+                                        <div id="chart-@item.Id"></div>
+
+                                        @{
+                                            bool isVotingOpen = item.StartDate <= today && today <= item.FinishDate;
+                                            bool hasUserVoted = item.Voters.Contains(Int32.Parse(User.FindFirst("uId").Value));
+                                            string buttonClass = "btn-outline-secondary";
+
+                                            if (isVotingOpen && !hasUserVoted)
+                                            {
+                                                buttonClass = "btn-outline-success";
+                                            }
+                                        }
+
+                                        <a class="btn @buttonClass" asp-action="Vote" asp-route-id="@item.Id">Συμμετοχή</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <script>
+                var votesData = @Html.Raw(item.Votes);
+
+                var chartData = Object.keys(votesData).map(function (key) {
+                    console.log([key, votesData[key]]);
+                    return [key, votesData[key]];
+                });
+
+                var chart = bb.generate({
+                    data: {
+                        columns: chartData,
+                        type: "donut",
+                        onclick: function (d, i) {
+                            console.log("onclick", d, i);
+                        },
+                        onover: function (d, i) {
+                            console.log("onover", d, i);
+                        },
+                        onout: function (d, i) {
+                            console.log("onout", d, i);
+                        },
+                    },
+                    donut: {
+                        title: "Votes",
+                    },
+                    bindto: "#chart-@item.Id",
+                });
+            </script>
+        }
+    }
+</div>

@@ -42,9 +42,15 @@ namespace Soft_Eng_Spring2024.Controllers
             {
                 return NotFound();
             }
-            TempData["pollDict"] = DeserializeVotes(poll.Votes);
+            //TempData["pollDict"] = DeserializeVotes(poll.Votes);
             return View(poll);
         }
+
+        public async Task<IActionResult> Details2()
+        {
+            return View(await _context.Poll.ToListAsync());
+        }
+
 
         // GET: Polls/Create
         public IActionResult Create()
